@@ -1,0 +1,12 @@
+/**
+ * @file 样式规则
+ */
+module.exports = {
+    extends: [
+        '@ecomfe/stylelint-config/baidu/default',
+    ],
+    rules: {
+        // 缩进4
+        'indentation': 4,
+    }
+};
