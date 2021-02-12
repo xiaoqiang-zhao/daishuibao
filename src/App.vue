@@ -1,6 +1,6 @@
 <template>
-<div id="app" class="page-root">
-    页面内容
+<div class="page-root">
+    <router-view></router-view>
 </div>
 </template>
 
@@ -11,6 +11,7 @@
  * @author zxq
  */
 
+import '@/assets/base.less';
 // iconfont
 
 // 常用组件的样式

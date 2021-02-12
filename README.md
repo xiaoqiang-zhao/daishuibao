@@ -37,6 +37,8 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 图标已经在 iconfont 中收藏。
 
+从 png 到 ico 用比图虫: https://www.bitbug.net
+
 ### iconfont
 
 ### 前端测试静态资源路径
