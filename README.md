@@ -29,6 +29,14 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## 当前项目相关
 
+### favicon.ico
+
+```html
+<link rel="shortcut icon" type="image/x-ico" href="/static/favicon.ico">
+```
+
+图标已经在 iconfont 中收藏。
+
 ### iconfont
 
 ### 前端测试静态资源路径
