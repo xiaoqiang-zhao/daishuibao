@@ -28,6 +28,26 @@ export default new Router({
             path: '/client-document',
             component: () => import('@/pages/clientDocument')
         },
+        // 信息上传
+        {
+            path: '/upload',
+            component: () => import('@/pages/upload')
+        },
+        // 智能做账
+        {
+            path: '/smart-bill',
+            component: () => import('@/pages/smartBill')
+        },
+        // 一键报税
+        {
+            path: '/one-key-bill',
+            component: () => import('@/pages/oneKeyBill')
+        },
+        // 历史记录
+        {
+            path: '/history',
+            component: () => import('@/pages/history')
+        },
         // 页面未找到
         {
             path: '/page-404',

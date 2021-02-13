@@ -8,26 +8,27 @@
             </h1>
         </div>
         <el-menu
-            default-active="1"
-            class="menu">
-            <el-menu-item index="1">
-                <i class="el-icon-menu"></i>
+            :default-active="activedIndex"
+            class="menu"
+            @select="selectMenuItem">
+            <el-menu-item index="0">
+                <i class="iconfont icon-document"></i>
                 <span slot="title">客户档案</span>
             </el-menu-item>
-            <el-menu-item index="2">
-                <i class="el-icon-menu"></i>
+            <el-menu-item index="1">
+                <i class="iconfont icon-upload"></i>
                 <span slot="title">信息上传</span>
             </el-menu-item>
-            <el-menu-item index="3">
-                <i class="el-icon-menu"></i>
+            <el-menu-item index="2">
+                <i class="iconfont icon-smart"></i>
                 <span slot="title">智能做账</span>
             </el-menu-item>
-            <el-menu-item index="4">
-                <i class="el-icon-menu"></i>
+            <el-menu-item index="3">
+                <i class="iconfont icon-one-key"></i>
                 <span slot="title">一键报税</span>
             </el-menu-item>
-            <el-menu-item index="5">
-                <i class="el-icon-menu"></i>
+            <el-menu-item index="4">
+                <i class="iconfont icon-history"></i>
                 <span slot="title">历史记录</span>
             </el-menu-item>
             <!-- <el-submenu index="1">
@@ -47,7 +48,36 @@
     </aside>
 </template>
 
+<script>
+export default {
+    data() {
+        return {
+            activedIndex: '0'
+        };
+    },
+    methods: {
 
+        /**
+         * 菜单选中
+         *
+         * @param {Number} index 索引值
+         */
+        selectMenuItem(index) {
+            const routes = [
+                '/client-document',
+                '/upload',
+                '/smart-bill',
+                '/one-key-bill',
+                '/history'
+            ];
+            if (this.activedIndex !== index) {
+                this.activedIndex = index;
+                this.$router.push(routes[index]);
+            }
+        }
+    }
+}
+</script>
 <style lang="less" scoped>
 .sidebar {
     flex: 0 0 256px;
@@ -78,6 +108,10 @@
     .menu {
         margin-top: 1px;
         height: calc(100% - 62px);
+    }
+    .icon-upload,
+    .icon-one-key {
+        font-size: 20px;
     }
 }
 </style>
