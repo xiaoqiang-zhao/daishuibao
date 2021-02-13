@@ -1,6 +1,17 @@
 <template>
 <div class="page-root">
-    <router-view></router-view>
+    <!-- 已登录 -->
+    <template v-if="isLogined">
+        <aside>
+            侧边栏
+        </aside>
+        <main class="container">
+            <header>头</header>
+            <router-view></router-view>
+        </main>
+    </template>
+    <!-- 未登录 - 登陆页 -->
+    <router-view v-else @userStatusChange="userStatusChange"></router-view>
 </div>
 </template>
 
@@ -34,17 +45,30 @@ import 'element-ui/lib/theme-chalk/table.css';
 import 'element-ui/lib/theme-chalk/table-column.css';
 import 'element-ui/lib/theme-chalk/tabs.css';
 
+import utiles from '@/components/utiles';
+
 export default {
     name: 'App',
     components: {
     },
     data() {
         return {
+            // 是否已登录
+            isLogined: utiles.getCurrentUser() !== null
         };
     },
     mounted() {
     },
     methods: {
+
+        /**
+         * 用户登录状态改变
+         * 
+         * @param {Boolean} status false: 退出登录，true: 登录成功
+         */
+        userStatusChange(status) {
+            this.isLogined = status;
+        }
 
     }
 };

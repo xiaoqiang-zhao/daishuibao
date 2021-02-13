@@ -32,7 +32,7 @@ export default {
     },
     beforeDestroy() {
         removeResizeListener(this.$el, this.setScreenSize);
-        off(document, "mousemove", this.handleMouseMove);
+        document.addEventListener('mousemove', this.handleMouseMove);
         if (this.interval) {
             clearInterval(this.interval);
         }

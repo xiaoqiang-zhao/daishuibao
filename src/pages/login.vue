@@ -9,12 +9,12 @@
             </div>
             <el-form ref="form" :model="form">
                 <el-form-item>
-                    <el-input v-model="form.name" placeholder="登录账号">
+                    <el-input v-model="form.username" placeholder="登录账号">
                         <i slot="prepend" class="el-icon-user"></i>
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="form.password" placeholder="登录密码">
+                    <el-input v-model="form.password" type="password" placeholder="登录密码">
                         <i slot="prepend" class="iconfont icon-password"></i>
                     </el-input>
                 </el-form-item>
@@ -34,7 +34,9 @@
  * @author zxq
  */
 
-import wave from "@/components/wave";
+import wave from '@/components/wave';
+import utiles from '@/components/utiles';
+
 export default {
     components: {
         wave,
@@ -42,7 +44,7 @@ export default {
     data() {
         return {
             form: {
-                name: '',
+                username: '',
                 password: ''
             }
         };
@@ -55,7 +57,14 @@ export default {
          * 登录
          */
         login() {
-
+            this.$http.post('/login', this.form).then(res => {
+                // 登录成功
+                if (res.data.isSuccess) {
+                    utiles.setCurrentUser(res.data);
+                    this.$emit('userStatusChange', true);
+                    this.$router.push('/client-document');
+                }
+            });
         }
     },
 };

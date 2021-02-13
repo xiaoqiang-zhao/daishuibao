@@ -30,9 +30,10 @@ axios.interceptors.response.use(res => {
         if (data.data === null) {
             data.data = {};
         }
-        if (data.code !== 2000) {
+
+        if (data.code !== 0) {
             // 2 秒后跳转到登陆页
-            if (data.code === 4501) {
+            if (data.code === 1) {
                 data.messageChs = '登录超时，2 秒后跳转到登陆页';
                 utiles.setCurrentUser(null);
 
@@ -75,8 +76,8 @@ router.beforeEach(function(to, from, next) {
     if (isLogined) {
         if (to.path === '/' || noLoginedPagesPath.indexOf(to.path) !== -1) {
             next({
-                // replace: true,
-                path: '/a'
+                replace: true,
+                path: '/client-document'
             });
         }
         else {

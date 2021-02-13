@@ -23,6 +23,11 @@ export default new Router({
             path: '/login',
             component: () => import('@/pages/login')
         },
+        // 客户档案
+        {
+            path: '/client-document',
+            component: () => import('@/pages/clientDocument')
+        },
         // 页面未找到
         {
             path: '/page-404',
