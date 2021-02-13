@@ -11,13 +11,14 @@
  * @author zxq
  */
 
-import '@/assets/base.less';
+import '@/assets/iconfont/iconfont.css';
 // iconfont
-
+import '@/assets/base.less';
 // 常用组件的样式
 import 'element-ui/lib/theme-chalk/alert.css';
 import 'element-ui/lib/theme-chalk/breadcrumb.css';
 import 'element-ui/lib/theme-chalk/button.css';
+import 'element-ui/lib/theme-chalk/card.css';
 import 'element-ui/lib/theme-chalk/date-picker.css';
 import 'element-ui/lib/theme-chalk/dialog.css';
 import 'element-ui/lib/theme-chalk/form.css';

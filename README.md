@@ -41,6 +41,10 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ### iconfont
 
+项目名: 代账宝
+
+地址: https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=2372971
+
 ### 前端测试静态资源路径
 
 Nginx 代理配置:
