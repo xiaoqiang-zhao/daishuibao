@@ -2,10 +2,8 @@
 <div class="page-root">
     <!-- 已登录 -->
     <template v-if="isLogined">
-        <aside>
-            侧边栏
-        </aside>
-        <main class="container">
+        <sidebar/>
+        <main class="main-container">
             <header>头</header>
             <router-view></router-view>
         </main>
@@ -34,6 +32,8 @@ import 'element-ui/lib/theme-chalk/date-picker.css';
 import 'element-ui/lib/theme-chalk/dialog.css';
 import 'element-ui/lib/theme-chalk/form.css';
 import 'element-ui/lib/theme-chalk/loading.css';
+import 'element-ui/lib/theme-chalk/menu.css';
+import 'element-ui/lib/theme-chalk/submenu.css';
 import 'element-ui/lib/theme-chalk/message-box.css';
 import 'element-ui/lib/theme-chalk/message.css';
 import 'element-ui/lib/theme-chalk/icon.css';
@@ -46,10 +46,12 @@ import 'element-ui/lib/theme-chalk/table-column.css';
 import 'element-ui/lib/theme-chalk/tabs.css';
 
 import utiles from '@/components/utiles';
+import sidebar from '@/components/sidebar';
 
 export default {
     name: 'App',
     components: {
+        sidebar
     },
     data() {
         return {
@@ -73,3 +75,14 @@ export default {
     }
 };
 </script>
+
+<style lang="less" scoped>
+.page-root {
+    display: flex;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, .03);
+    .main-container {
+        flex: 1;
+    }
+}
+</style>
