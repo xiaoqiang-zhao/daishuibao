@@ -6,6 +6,27 @@
   "description": "代账宝",
   "glyphs": [
     {
+      "icon_id": "18986527",
+      "name": "右展开",
+      "font_class": "to-right",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "18986533",
+      "name": "左折叠",
+      "font_class": "to-left",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "15258736",
+      "name": "账单",
+      "font_class": "zhangdan",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
       "icon_id": "7315439",
       "name": "密码",
       "font_class": "password",

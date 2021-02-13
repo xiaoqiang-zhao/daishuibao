@@ -77,7 +77,7 @@
     }
     .menu {
         margin-top: 1px;
-        height: calc(100% - 61px);
+        height: calc(100% - 62px);
     }
 }
 </style>

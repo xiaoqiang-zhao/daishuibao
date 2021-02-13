@@ -4,7 +4,7 @@
     <template v-if="isLogined">
         <sidebar/>
         <main class="main-container">
-            <header>头</header>
+            <header-bar @userStatusChange="userStatusChange"/>
             <router-view></router-view>
         </main>
     </template>
@@ -30,6 +30,7 @@ import 'element-ui/lib/theme-chalk/button.css';
 import 'element-ui/lib/theme-chalk/card.css';
 import 'element-ui/lib/theme-chalk/date-picker.css';
 import 'element-ui/lib/theme-chalk/dialog.css';
+import 'element-ui/lib/theme-chalk/dropdown.css';
 import 'element-ui/lib/theme-chalk/form.css';
 import 'element-ui/lib/theme-chalk/loading.css';
 import 'element-ui/lib/theme-chalk/menu.css';
@@ -47,11 +48,13 @@ import 'element-ui/lib/theme-chalk/tabs.css';
 
 import utiles from '@/components/utiles';
 import sidebar from '@/components/sidebar';
+import headerBar from '@/components/headerBar';
 
 export default {
     name: 'App',
     components: {
-        sidebar
+        sidebar,
+        headerBar
     },
     data() {
         return {
@@ -70,6 +73,9 @@ export default {
          */
         userStatusChange(status) {
             this.isLogined = status;
+            if (status === false) {
+                this.$router.push('/login');
+            }
         }
 
     }
