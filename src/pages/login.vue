@@ -5,7 +5,7 @@
                 <img src="/static/img/logo.png" alt="logo"/>
             </div>
             <div class="title">
-                代账宝
+                代账宝智能财务系统
             </div>
             <el-form ref="form" :model="form">
                 <el-form-item>
@@ -55,7 +55,7 @@ export default {
          * 登录
          */
         login() {
-            
+
         }
     },
 };
