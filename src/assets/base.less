@@ -16,3 +16,60 @@ a {
     color: @color-blue;
     text-decoration: none;
 }
+
+// 通用块
+.common-block-section,
+.common-text-block-section {
+    margin: 14px 0;
+    padding: 20px;
+    background: @color-white;
+    box-shadow: 0 1px 20px 0 rgba(114, 119, 129, .10);
+    > .title {
+        line-height: 36px;
+    }
+    > .button-right {
+        float: right;
+    }
+    > .head-text {
+        font-size: 16px;
+        line-height: 36px;
+    }
+    > .subhead-text {
+        padding-left: 30px;
+        color: @color-grey-low;
+    }
+}
+
+// 通用文本块
+.common-text-block-section {
+    .title-section {
+        @height: 56px;
+        border-bottom: 1px solid #eee;
+        margin: -20px -20px 13px;
+        padding: 0 20px;
+        line-height: @height;
+        font-size: 16px;
+        .el-button--text {
+            float: right;
+            line-height: @height;
+            padding: 0;
+        }
+        .iconfont {
+            margin-left: 7px;
+        }
+        .icon-edit {
+            font-size: 12px;
+        }
+    }
+    .text-section {
+        > .item {
+            display: inline-block;
+            width: 206px;
+            line-height: 2em;
+        }
+        > .single-line {
+            display: block;
+            width: auto;
+        }
+    }
+}

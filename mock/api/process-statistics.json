@@ -1,23 +1,8 @@
-# 进度统计接口
-
-## url
-
-```
-GET: /api/process-statistics
-```
-
-## 入参
-
-无
-
-## 出参
-
-```json
 {
     "code": 0,
     "message": "",
     "data": {
-        "total": 2810,
+        "total": 3956,
         "statusAmountList": [
             {
                 "status": 1,
@@ -42,12 +27,3 @@ GET: /api/process-statistics
         ]
     }
 }
-```
-
-状态附录:
-
-1: 待上传资料
-2: 待核对资料
-3: 待确认
-4: 待报税
-5: 报税完成

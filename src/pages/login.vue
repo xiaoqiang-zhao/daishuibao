@@ -39,7 +39,7 @@ import utiles from '@/components/utiles';
 
 export default {
     components: {
-        wave,
+        wave
     },
     data() {
         return {

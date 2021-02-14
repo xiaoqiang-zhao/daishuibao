@@ -6,6 +6,13 @@
   "description": "代账宝",
   "glyphs": [
     {
+      "icon_id": "11064389",
+      "name": "进度",
+      "font_class": "sand-clock",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
       "icon_id": "1650271",
       "name": "一键取件",
       "font_class": "one-key",
