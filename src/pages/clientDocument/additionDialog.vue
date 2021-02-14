@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        title="更新客户库与供应商库"
+        title="新增客户"
         :visible.sync="dialogVisible"
         width="500">
         <span>这是表单</span>

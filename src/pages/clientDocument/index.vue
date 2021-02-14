@@ -3,7 +3,9 @@
         <process-statistics/>
         <section class="common-block-section">
             <header class="top-line">
-                <el-button icon="el-icon-plus" type="primary">新增客户</el-button>
+                <el-button @click="addClient" icon="el-icon-plus" type="primary">
+                    新增客户
+                </el-button>
             </header>
             <el-table
                 ref="multipleTable"
@@ -65,7 +67,13 @@
                     label="客户库/供应商库"
                     width="140">
                     <template slot-scope="scope">
-                        <el-button type="primary" icon="el-icon-edit" size="mini">更新</el-button>
+                        <el-button
+                            @click="updateLibrary"
+                            type="primary"
+                            icon="el-icon-edit"
+                            size="mini">
+                            更新
+                        </el-button>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -83,16 +91,24 @@
                 class="pagination">
             </el-pagination>
         </section>
+        <additionDialog ref="additionDialog"/>
+        <updateDialog ref="updateDialog"/>
     </section>
 </template>
 
 <script>
-
+/**
+ * @file 客户档案
+ */
 import processStatistics from '@/components/process-statistics';
+import additionDialog from './additionDialog.vue';
+import updateDialog from './updateDialog.vue';
 
 export default {
     components: {
-        processStatistics
+        processStatistics,
+        additionDialog,
+        updateDialog
     },
     data() {
         return {
@@ -125,6 +141,17 @@ export default {
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;
+        },
+
+        /**
+         * 打开新增客户弹框
+         */
+        addClient() {
+            this.$refs.additionDialog.open();
+        },
+
+        updateLibrary() {
+            this.$refs.updateDialog.open();
         }
     }
 }
