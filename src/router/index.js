@@ -26,7 +26,7 @@ export default new Router({
         // 客户档案
         {
             path: '/client-document',
-            component: () => import('@/pages/clientDocument')
+            component: () => import('@/pages/clientDocument/index')
         },
         // 信息上传
         {

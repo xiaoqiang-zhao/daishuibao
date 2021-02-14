@@ -1,0 +1,14 @@
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "total": 300,
+        "list": [
+            {
+                "serialNumber": "00001",
+                "companyName": "XXXXX有限公司",
+                "industry": "餐饮"
+            }
+        ]
+    }
+}
