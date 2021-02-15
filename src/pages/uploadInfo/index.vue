@@ -4,10 +4,10 @@
         <section class="common-block-section">
             <el-tabs v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane label="一般纳税人" name="first">
-                    用户管理
+                    <type-table :type="0"/>
                 </el-tab-pane>
                 <el-tab-pane label="小规模纳税人" name="second">
-                    配置管理
+                    <type-table :type="1"/>
                 </el-tab-pane>
             </el-tabs>
         </section>
@@ -19,10 +19,12 @@
  * @file 上传信息
  */
 import processStatistics from '@/components/process-statistics';
+import typeTable from './typeTable';
 
 export default {
     components: {
-        processStatistics
+        processStatistics,
+        typeTable
     },
     data() {
         return {
