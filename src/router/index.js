@@ -41,7 +41,7 @@ export default new Router({
         // 一键报税
         {
             path: '/one-key-bill',
-            component: () => import('@/pages/oneKeyBill')
+            component: () => import('@/pages/oneKeyBill/index')
         },
         // 历史记录
         {
