@@ -61,7 +61,7 @@
                 <el-table-column
                     prop=""
                     label="期初数"
-                    width="120">
+                    width="70">
                 </el-table-column>
                 <el-table-column
                     label="客户库/供应商库"

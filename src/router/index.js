@@ -30,8 +30,8 @@ export default new Router({
         },
         // 信息上传
         {
-            path: '/upload',
-            component: () => import('@/pages/upload')
+            path: '/upload-info',
+            component: () => import('@/pages/uploadInfo/index')
         },
         // 智能做账
         {
