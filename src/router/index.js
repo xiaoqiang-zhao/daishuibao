@@ -36,7 +36,7 @@ export default new Router({
         // 智能做账
         {
             path: '/smart-bill',
-            component: () => import('@/pages/smartBill')
+            component: () => import('@/pages/smartBill/index')
         },
         // 一键报税
         {
