@@ -23,10 +23,13 @@
                 <i class="iconfont icon-smart"></i>
                 <span slot="title">智能做账</span>
             </el-menu-item>
-            <el-menu-item index="/one-key-bill">
-                <i class="iconfont icon-one-key"></i>
-                <span slot="title">一键报税</span>
-            </el-menu-item>
+            <el-submenu index="/one-key-bill">
+                <template slot="title">
+                    <i class="iconfont icon-one-key"></i>
+                    <span>一键报税</span>
+                </template>
+                <el-menu-item index="/one-key-bill">企业增值税</el-menu-item>
+            </el-submenu>
             <el-menu-item index="/history">
                 <i class="iconfont icon-history"></i>
                 <span slot="title">历史记录</span>
