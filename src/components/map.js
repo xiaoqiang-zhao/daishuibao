@@ -32,5 +32,15 @@ export default {
             label: '报税完成',
             value: 5
         }
+    ],
+    // 行业列表
+    industryList: [
+        '餐饮',
+        '制造'
+    ],
+    // 公司类型
+    companyTypeList: [
+        '一般纳税人',
+        '小规模纳税人'
     ]
 };
