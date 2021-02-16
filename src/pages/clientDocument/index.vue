@@ -124,7 +124,7 @@ export default {
     methods: {
 
         loadData() {
-            this.$http.get('/documents').then(res => {
+            this.$http.get('/companies').then(res => {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });
@@ -162,6 +162,7 @@ export default {
     padding: 0 10px;
     .top-line {
         padding-bottom: 10px;
+        text-align: right;
     }
     .pagination {
         text-align: right;

@@ -102,7 +102,7 @@ export default {
     methods: {
 
         loadData() {
-            this.$http.get('/documents').then(res => {
+            this.$http.get('/bills').then(res => {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });

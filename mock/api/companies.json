@@ -1,0 +1,45 @@
+{
+    "code": 0,
+    "message": "",
+    "data": {
+        "total": 300,
+        "list": [
+            {
+                "serialNumber": "00001",
+                "companyName": "AAAAAA 有限公司",
+                "industry": "餐饮",
+                "status": 1
+            },
+            {
+                "serialNumber": "00002",
+                "companyName": "BBBBBB 有限公司",
+                "industry": "餐饮",
+                "status": 2
+            },
+            {
+                "serialNumber": "00003",
+                "companyName": "CCCCC 有限公司",
+                "industry": "餐饮",
+                "status": 3
+            },
+            {
+                "serialNumber": "00004",
+                "companyName": "DDDD 有限公司",
+                "industry": "餐饮",
+                "status": 4
+            },
+            {
+                "serialNumber": "00005",
+                "companyName": "EEEEE 有限公司",
+                "industry": "餐饮",
+                "status": 5
+            },
+            {
+                "serialNumber": "00006",
+                "companyName": "XXXXX 有限公司",
+                "industry": "餐饮",
+                "status": 2
+            }
+        ]
+    }
+}
