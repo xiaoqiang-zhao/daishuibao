@@ -3,15 +3,15 @@
         <div class="brand">
             <img src="/static/img/logo.png" alt="logo" />
             <h1 class="title">
-                代账宝
-                <!-- 代账宝智能财务系统 -->
+                <!-- 代账宝 -->
+                代账宝智能财务系统
             </h1>
         </div>
         <el-menu
             :default-active="activedIndex"
             router
             class="menu">
-            <el-menu-item index="/client-document">
+            <el-menu-item index="/companies">
                 <i class="iconfont icon-document"></i>
                 <span slot="title">客户档案</span>
             </el-menu-item>
@@ -132,7 +132,7 @@ export default {
         > h1 {
             display: inline-block;
             padding: 0;
-            margin: 0 0 0 12px;
+            margin: 0 0 0 5px;
             font-size: 20px;
             font-weight: 700;
             line-height: 60px;
