@@ -68,7 +68,7 @@
                     width="140">
                     <template slot-scope="scope">
                         <el-button
-                            @click="updateLibrary"
+                            @click="updateLibrary(scope.row)"
                             type="primary"
                             icon="el-icon-edit"
                             size="mini">
@@ -92,7 +92,7 @@
             </el-pagination>
         </section>
         <additionDialog ref="additionDialog"/>
-        <updateDialog ref="updateDialog"/>
+        <updateDialog ref="updateDialog" :companyData="companyData"/>
     </section>
 </template>
 
@@ -115,7 +115,8 @@ export default {
             activedName: 'a',
             total: 0,
             tableData: [],
-            multipleSelection: []
+            multipleSelection: [],
+            companyData: null
         };
     },
     mounted() {
@@ -150,8 +151,9 @@ export default {
             this.$refs.additionDialog.open();
         },
 
-        updateLibrary() {
-            this.$refs.updateDialog.open();
+        updateLibrary(companyData) {
+            this.companyData = companyData;
+            this.$refs.updateDialog.open(companyData);
         }
     }
 }
