@@ -20,7 +20,6 @@
             prop="name"
             label="编号"
             width="120">
-            <!-- <template slot-scope="scope">{{ scope.row.date }}</template> -->
         </el-table-column>
         <el-table-column
             prop="companyName"

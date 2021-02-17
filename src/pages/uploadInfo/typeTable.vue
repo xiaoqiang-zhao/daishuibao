@@ -1,6 +1,22 @@
 <template>
 <section class="upload-info-type-table">
-    <section class="top-line"></section>
+    <section class="top-line">
+        <el-button
+            v-if="!isCheckStatus"
+            @click="isCheckStatus = true"
+            icon="el-icon-edit"
+            type="primary">
+            批量核对
+        </el-button>
+        <template v-else>
+            <el-button @click="checkBilles" type="primary">
+                确认
+            </el-button>
+            <el-button @click="isCheckStatus = false" type="primary" plain>
+                返回
+            </el-button>
+        </template>
+    </section>
     <el-table
         ref="multipleTable"
         stripe
@@ -8,6 +24,11 @@
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange">
+        <el-table-column
+            v-if="isCheckStatus"
+            type="selection"
+            width="55">
+        </el-table-column>
         <el-table-column
             prop="name"
             label="编号"
@@ -86,7 +107,8 @@ export default {
         return {
             activedName: 'a',
             total: 0,
-            tableData: []
+            tableData: [],
+            isCheckStatus: false
         };
     },
     mounted() {
@@ -94,12 +116,47 @@ export default {
     },
     methods: {
 
+        /**
+         * 加载数据
+         */
         loadData() {
             this.$http.get('/bills').then(res => {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });
         },
+
+        /**
+         * 发起批量核对状态
+         */
+        checkBilles() {
+            // this.isCheckStatus = true;
+
+            this.$confirm(
+                '账务核对需要在电子税务局上取数，因此请保证办税人手机已经和电脑连接，否则将无法进入流程！',
+                '提示',
+            {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                const loading = this.$loading({
+                    customClass: 'checking-bill',
+                    lock: true,
+                    text: '核对中，请稍等...',
+                    spinner: 'el-icon-loading',
+                    // spinner: 'iconfont icon-jindutiao1',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                setTimeout(() => {
+                    // loading.close();
+                    debugger
+                    loading.text = '核对中，请稍等...  37/209';
+                }, 2000);
+            });
+
+        },
+
         toggleSelection(rows) {
             if (rows) {
                 rows.forEach(row => {
@@ -110,6 +167,7 @@ export default {
                 this.$refs.multipleTable.clearSelection();
             }
         },
+
         handleSelectionChange(val) {
             this.multipleSelection = val;
         }
@@ -127,5 +185,13 @@ export default {
         text-align: right;
         padding: 20px 0 0;
     }
+    .checking-bill {
+        font-size: 50px;
+    }
+}
+</style>
+<style lang="less">
+.checking-bill .el-icon-loading {
+    font-size: 50px;
 }
 </style>
