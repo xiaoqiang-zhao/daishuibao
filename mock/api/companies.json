@@ -6,42 +6,42 @@
         "list": [
             {
                 "id": "1",
-                "serialNumber": "00001",
+                "serialNumber": "0001",
                 "companyName": "AAAAAA 有限公司",
                 "industry": "餐饮",
                 "status": 1
             },
             {
                 "id": "2",
-                "serialNumber": "00002",
+                "serialNumber": "0002",
                 "companyName": "BBBBBB 有限公司",
                 "industry": "餐饮",
                 "status": 2
             },
             {
                 "id": "3",
-                "serialNumber": "00003",
+                "serialNumber": "0003",
                 "companyName": "CCCCC 有限公司",
                 "industry": "餐饮",
                 "status": 3
             },
             {
                 "id": "4",
-                "serialNumber": "00004",
+                "serialNumber": "0004",
                 "companyName": "DDDD 有限公司",
                 "industry": "餐饮",
                 "status": 4
             },
             {
                 "id": "5",
-                "serialNumber": "00005",
+                "serialNumber": "0005",
                 "companyName": "EEEEE 有限公司",
                 "industry": "餐饮",
                 "status": 5
             },
             {
                 "id": "6",
-                "serialNumber": "00006",
+                "serialNumber": "0006",
                 "companyName": "XXXXX 有限公司",
                 "industry": "餐饮",
                 "status": 2
