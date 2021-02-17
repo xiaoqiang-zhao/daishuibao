@@ -9,7 +9,7 @@
             label-width="110px"
             size="mini"
             class="form-section">
-            <el-form-item label="活动名称">
+            <el-form-item label="公司名称">
                 <el-input v-model="form.companyName" placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item label="所属行业">
@@ -59,11 +59,11 @@
                         class="upload-item">
                         <el-button size="small" type="primary">点击上传【利润表】excel</el-button>
                     </el-upload>
-                    <el-upload
+                    <!-- <el-upload
                         action="https://jsonplaceholder.typicode.com/posts/"
                         class="upload-item">
                         <el-button size="small" type="primary">点击上传【现金流量表】excel</el-button>
-                    </el-upload>
+                    </el-upload> -->
                     <el-upload
                         action="https://jsonplaceholder.typicode.com/posts/"
                         class="upload-item">

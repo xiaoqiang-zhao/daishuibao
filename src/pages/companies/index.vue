@@ -3,6 +3,9 @@
         <process-statistics/>
         <section class="common-block-section">
             <header class="top-line">
+                <el-button @click="editCompanies" icon="el-icon-edit" type="primary">
+                    编辑客户
+                </el-button>
                 <el-button @click="addClient" icon="el-icon-plus" type="primary">
                     新增客户
                 </el-button>
@@ -151,6 +154,13 @@ export default {
             this.$refs.additionDialog.open();
         },
 
+        /**
+         * 编辑客户
+         */
+        editCompanies() {
+
+        },
+
         updateLibrary(companyData) {
             this.companyData = companyData;
             this.$refs.updateDialog.open(companyData);
@@ -164,7 +174,7 @@ export default {
     padding: 0 10px;
     .top-line {
         padding-bottom: 10px;
-        text-align: right;
+        // text-align: right;
     }
     .pagination {
         text-align: right;
