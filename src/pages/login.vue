@@ -7,14 +7,18 @@
             <div class="title">
                 代账宝智能财务系统
             </div>
-            <el-form ref="form" :model="form">
-                <el-form-item>
-                    <el-input v-model="form.username" placeholder="登录账号">
+            <el-form ref="form" :model="form" :rules="rules">
+                <el-form-item prop="userName">
+                    <el-input v-model="form.userName" placeholder="登录账号">
                         <i slot="prepend" class="el-icon-user"></i>
                     </el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-input v-model="form.password" type="password" placeholder="登录密码">
+                <el-form-item prop="password">
+                    <el-input
+                        v-model="form.password"
+                        @keyup.enter.native="login"
+                        type="password"
+                        placeholder="登录密码">
                         <i slot="prepend" class="iconfont icon-password"></i>
                     </el-input>
                 </el-form-item>
@@ -44,8 +48,20 @@ export default {
     data() {
         return {
             form: {
-                username: '',
+                userName: '',
                 password: ''
+            },
+            rules: {
+                userName: {
+                    required: true,
+                    message: '请输入账号',
+                    trigger: 'blur'
+                },
+                password: {
+                    required: true,
+                    message: '请输入密码',
+                    trigger: 'blur'
+                }
             }
         };
     },
@@ -57,20 +73,28 @@ export default {
          * 登录
          */
         login() {
-            this.$http.post('/login', this.form).then(res => {
-                // 登录成功
-                if (res.data.isSuccess) {
-                    utiles.setCurrentUser(res.data);
-                    this.$emit('userStatusChange', true);
-                    this.$router.push('/client-document');
+            // 校验
+            this.$refs.form.validate(result => {
+                if (result) {
+                    this.$http.post('/login', this.form).then(res => {
+                        // 登录成功
+                        if (res.data.isSuccess) {
+                            utiles.setCurrentUser(res.data);
+                            this.$emit('userStatusChange', true);
+                            this.$router.push('/companies');
+                        }
+                        else {
+                            this.$message.error('用户名或密码错误，请查验后登录');
+                        }
+                    });
                 }
             });
         }
-    },
+    }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .login {
     position: relative;
     width: 100%;
@@ -104,6 +128,10 @@ export default {
         .icon-password {
             padding-top: 4px;
             font-size: 16px;
+        }
+
+        .el-form-item__error {
+            padding-left: 56px;
         }
 
         .login-btn {
