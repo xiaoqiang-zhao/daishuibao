@@ -12,8 +12,7 @@
                 stripe
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
+                style="width: 100%">
                 <el-table-column
                     prop="serialNumber"
                     label="编号"
@@ -25,13 +24,11 @@
                 </el-table-column>
                 <el-table-column
                     prop="industry"
-                    label="所属行业"
-                    width="80">
+                    label="所属行业">
                 </el-table-column>
                 <el-table-column
                     prop=""
-                    label="会计负责人"
-                    width="90">
+                    label="会计负责人">
                 </el-table-column>
                 <el-table-column
                     prop="mobile"
@@ -40,18 +37,17 @@
                 </el-table-column>
                 <el-table-column
                     prop=""
-                    label="微信号"
-                    width="80">
+                    label="微信号">
                 </el-table-column>
                 <el-table-column
                     prop=""
                     label="营业执照号"
-                    width="90">
+                    width="110">
                 </el-table-column>
                 <el-table-column
                     prop=""
                     label="纳税人类型"
-                    width="90">
+                    width="120">
                 </el-table-column>
                 <el-table-column
                     prop=""
@@ -118,19 +114,6 @@ export default {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });
-        },
-        toggleSelection(rows) {
-            if (rows) {
-                rows.forEach(row => {
-                    this.$refs.multipleTable.toggleRowSelection(row);
-                });
-            }
-            else {
-                this.$refs.multipleTable.clearSelection();
-            }
-        },
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
         },
 
         /**
