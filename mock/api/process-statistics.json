@@ -2,26 +2,28 @@
     "code": 0,
     "message": "",
     "data": {
-        "total": 3956,
-        "statusAmountList": [
+        "total": 3175,
+        "pageStatusList": [
             {
-                "status": 1,
+                "pageStatus": 1,
                 "amount": 1322
             },
             {
-                "status": 2,
+                "pageStatus": 2,
                 "amount": 1091
             },
             {
-                "status": 3,
+                "pageStatus": 3,
+                "amount": 762
+            }
+        ],
+        "bizStatusList": [
+            {
+                "status": 1,
                 "amount": 762
             },
             {
-                "status": 4,
-                "amount": 762
-            },
-            {
-                "status": 5,
+                "status": 2,
                 "amount": 19
             }
         ]

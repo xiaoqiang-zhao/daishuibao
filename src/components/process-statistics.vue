@@ -2,12 +2,14 @@
     <section class="process-statistics common-block-section">
         <header>
             <div>
-                <i class="iconfont icon-sand-clock"></i>
-                进度统计
+                <img src="/static/img/sand-time.png" alt="">
+                <span class="text">
+                    进度统计
+                </span>
             </div>
-            <span>共计 {{ total }} 家企业</span>
+            <span>客户总数量: {{ total }}</span>
         </header>
-        <article v-for="item in dataList" :key="item.status">
+        <article v-for="item in pageStatusList" :key="item.status" class="item-left">
             <header>
                 {{ item.title }}
             </header>
@@ -15,7 +17,19 @@
                 {{ item.amount }}
             </section>
             <footer>
-                <div ref="chartContainer" class="chart-container"></div>
+                <img src="/static/img/percent.png"/>
+                <div class="percent">{{ item.persent }}%</div>
+            </footer>
+        </article>
+        <article v-for="item in bizStatusList" :key="item.status" class="item-right">
+            <header>
+                {{ item.title }}
+            </header>
+            <section>
+                {{ item.amount }}
+            </section>
+            <footer>
+                <img src="/static/img/percent2.png"/>
                 <div class="percent">{{ item.persent }}%</div>
             </footer>
         </article>
@@ -23,14 +37,13 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import map from '@/components/map';
 export default {
     data() {
         return {
             num: '30%',
             total: 0,
-            dataList: []
+            pageStatusList: [],
+            bizStatusList: []
         };
     },
     mounted() {
@@ -44,17 +57,27 @@ export default {
         loadData() {
             this.$http.get('/process-statistics').then(res => {
                 this.total = res.data.total;
-                map.accountStatus.forEach(item => {
-                    const amount = this.getStatusAmount(res.data.statusAmountList, item.value);
-                    this.dataList.push({
-                        title: item.label,
-                        amount,
-                        persent: ((amount / this.total) * 100).toFixed(2)
-                    });
+                // 加工数据
+                const pageStatusMap = [
+                    '信息上传环节',
+                    '智能做账环节',
+                    '一键报税环节',
+                ];
+                res.data.pageStatusList.forEach(item => {
+                    item.title = pageStatusMap[item.pageStatus - 1];
+                    item.persent = ((item.amount / this.total) * 100).toFixed(2)
                 });
-                this.$nextTick(() => {
-                    this.initChart();
+                this.pageStatusList = res.data.pageStatusList;
+
+                const bizStatusMap = [
+                    '财务完成',
+                    '报税完成'
+                ];
+                res.data.bizStatusList.forEach(item => {
+                    item.title = bizStatusMap[item.status - 1];
+                    item.persent = ((item.amount / this.total) * 100).toFixed(2)
                 });
+                this.bizStatusList = res.data.bizStatusList;
             });
         },
 
@@ -73,45 +96,6 @@ export default {
                 }
             });
             return amount;
-        },
-
-        /**
-         * 初始化饼图
-         */
-        initChart() {
-            this.$refs.chartContainer.forEach((item, index) => {
-                const chart = echarts.init(item);
-                chart.setOption({
-                    color: [
-                        '#4175fa',
-                        '#d3d3d3'
-                    ],
-                    series: [
-                        {
-                            type: 'pie',
-                            radius: '100%',
-                            // 关闭放大功能
-                            hoverAnimation: false,
-                            data: [
-                                {
-                                    value: this.dataList[index].amount,
-                                    name: '当前状态量'
-                                },
-                                {
-                                    value: this.total - this.dataList[index].amount,
-                                    name: '其他'
-                                }
-                            ],
-                            // 去除饼图的指示折线label
-                            label: {
-                                normal: {
-                                    show: false
-                                }
-                            }
-                        }
-                    ]
-                });
-            });
         }
     }
 }
@@ -122,17 +106,23 @@ export default {
 .process-statistics {
     display: flex;
     > header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         flex: 1;
         text-align: center;
         > div {
             font-size: 18px;
-            .icon-sand-clock {
-                font-size: 36px;
-                color: @color-blue;
+            img {
+                width: 50px;
+            }
+            .text {
+                vertical-align: 19px;
             }
         }
         > span {
-            color: @color-grey;
+            color: @color-grey-low;
+            font-size: 16px;
         }
         
     }
@@ -150,17 +140,25 @@ export default {
                 display: inline-block;
                 vertical-align: middle;
             }
-            .chart-container {
-                width: 50px;
-                height: 50px;
+            img {
+                width: 40px;
             }
             .percent {
-                height: 50px;
                 margin-right: -30px;
                 font-size: 12px;
                 color: @color-grey-low;
+                vertical-align: 21px;
             }
         }
+    }
+    .item-right {
+        > header,
+        > footer .percent {
+            color: @color-blue;
+        }
+    }
+    .item-left + .item-right {
+        border-left: 1px solid @color-grey-low;
     }
 }
 </style>
