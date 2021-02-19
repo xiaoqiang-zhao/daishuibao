@@ -40,7 +40,6 @@
 export default {
     data() {
         return {
-            num: '30%',
             total: 0,
             pageStatusList: [],
             bizStatusList: []
@@ -79,23 +78,6 @@ export default {
                 });
                 this.bizStatusList = res.data.bizStatusList;
             });
-        },
-
-        /**
-         * 获取数据
-         * 
-         * @param {Array} statusAmountList 服务端返回数据
-         * @param {Number} status 状态值
-         */
-        getStatusAmount(statusAmountList, status) {
-            let amount;
-            statusAmountList.some(item => {
-                if (item.status === status) {
-                    amount = item.amount;
-                    return true;
-                }
-            });
-            return amount;
         }
     }
 }
