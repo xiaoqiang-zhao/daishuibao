@@ -77,7 +77,7 @@ router.beforeEach(function(to, from, next) {
         if (to.path === '/' || noLoginedPagesPath.indexOf(to.path) !== -1) {
             next({
                 replace: true,
-                path: '/client-document'
+                path: '/companies'
             });
         }
         else {

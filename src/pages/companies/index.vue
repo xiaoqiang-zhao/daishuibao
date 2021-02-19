@@ -3,9 +3,6 @@
         <process-statistics/>
         <section class="common-block-section">
             <header class="top-line">
-                <el-button @click="editCompanies" icon="el-icon-edit" type="primary">
-                    编辑客户
-                </el-button>
                 <el-button @click="addClient" icon="el-icon-plus" type="primary">
                     新增客户
                 </el-button>
@@ -62,13 +59,8 @@
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    prop=""
-                    label="期初数"
-                    width="70">
-                </el-table-column>
-                <el-table-column
-                    label="客户库/供应商库"
-                    width="140">
+                    label="操作"
+                    width="200">
                     <template slot-scope="scope">
                         <el-button
                             @click="updateLibrary(scope.row)"
@@ -77,12 +69,6 @@
                             size="mini">
                             更新
                         </el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    label="操作"
-                    width="100">
-                    <template slot-scope="scope">
                         <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
                     </template>
                 </el-table-column>

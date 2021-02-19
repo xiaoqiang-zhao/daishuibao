@@ -2,10 +2,10 @@
 <div class="page-root">
     <!-- 已登录 -->
     <template v-if="isLogined">
-        <sidebar/>
+        <header-bar @userStatusChange="userStatusChange"/>
         <main class="main-container">
-            <header-bar @userStatusChange="userStatusChange"/>
-            <router-view></router-view>
+            <sidebar/>
+            <router-view class="main-view"></router-view>
         </main>
     </template>
     <!-- 未登录 - 登陆页 -->
@@ -85,10 +85,16 @@ export default {
 <style lang="less" scoped>
 .page-root {
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
     background: rgba(0, 0, 0, .03);
     .main-container {
         flex: 1;
+        display: flex;
+
+        .main-view {
+            flex: 1;
+        }
     }
 }
 </style>

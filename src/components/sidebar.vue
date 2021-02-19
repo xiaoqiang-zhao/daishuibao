@@ -1,12 +1,5 @@
 <template>
     <aside class="sidebar">
-        <div class="brand">
-            <img src="/static/img/logo.png" alt="logo" />
-            <h1 class="title">
-                <!-- 代账宝 -->
-                代账宝智能财务系统
-            </h1>
-        </div>
         <el-menu
             :default-active="activedIndex"
             router
@@ -114,34 +107,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .sidebar {
-    flex: 0 0 256px;
+    flex: 0 0 138px;
     background: #fff;
-    .brand {
-        height: 60px;
-        line-height: 60px;
-        padding: 0 16px;
-        overflow: hidden;
-        box-shadow: 0 1px 0 0 rgb(0 0 0 / 4%);
-        border-right: solid 1px #e6e6e6;
-        border-bottom: solid 1px #e6e6e6;
-        > img {
-            margin-top: -8px;
-            height: 32px;
-            vertical-align: middle;
-        }
-        > h1 {
-            display: inline-block;
-            padding: 0;
-            margin: 0 0 0 5px;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 60px;
-            color: rgba(0, 0, 0, 0.65);
-        }
-    }
     .menu {
-        margin-top: 1px;
-        height: calc(100% - 62px);
+        // margin-top: 1px;
+        // height: calc(100% - 2px);
+        height: 100%;
     }
     .icon-upload,
     .icon-one-key {
