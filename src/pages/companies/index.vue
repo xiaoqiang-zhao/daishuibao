@@ -85,9 +85,12 @@
                     width="110">
                 </el-table-column>
                 <el-table-column
-                    prop=""
+                    prop="payTaxesType"
                     label="纳税人类型"
                     width="120">
+                    <template slot-scope="scope">
+                        {{ payTaxesTypeList[scope.row.payTaxesType] }}
+                    </template>
                 </el-table-column>
                 <el-table-column
                     prop=""

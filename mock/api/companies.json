@@ -9,6 +9,7 @@
                 "serialNumber": "0001",
                 "companyName": "AAAAAA 有限公司",
                 "industry": "餐饮",
+                "payTaxesType": 0,
                 "status": 1
             },
             {
@@ -16,6 +17,7 @@
                 "serialNumber": "0002",
                 "companyName": "BBBBBB 有限公司",
                 "industry": "餐饮",
+                "payTaxesType": 1,
                 "status": 2
             },
             {
@@ -23,6 +25,7 @@
                 "serialNumber": "0003",
                 "companyName": "CCCCC 有限公司",
                 "industry": "餐饮",
+                "payTaxesType": 0,
                 "status": 3
             },
             {
@@ -30,6 +33,7 @@
                 "serialNumber": "0004",
                 "companyName": "DDDD 有限公司",
                 "industry": "餐饮",
+                "payTaxesType": 0,
                 "status": 4
             },
             {
@@ -37,6 +41,7 @@
                 "serialNumber": "0005",
                 "companyName": "EEEEE 有限公司",
                 "industry": "餐饮",
+                "payTaxesType": 1,
                 "status": 5
             },
             {
@@ -44,6 +49,7 @@
                 "serialNumber": "0006",
                 "companyName": "XXXXX 有限公司",
                 "industry": "餐饮",
+                "payTaxesType": 1,
                 "status": 2
             }
         ]
