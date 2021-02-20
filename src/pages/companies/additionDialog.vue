@@ -37,7 +37,7 @@
             <el-form-item label="纳税类型">
                 <el-select v-model="form.type" placeholder="请选择">
                     <el-option
-                        v-for="item in companyTypeList"
+                        v-for="item in payTaxesTypeList"
                         :key="item"
                         :label="item"
                         :value="item">
@@ -91,7 +91,7 @@ export default {
         return {
             dialogVisible: false,
             industryList: map.industryList,
-            companyTypeList: map.companyTypeList,
+            payTaxesTypeList: map.payTaxesTypeList,
             form: {
                 companyName: '',
                 type: '',

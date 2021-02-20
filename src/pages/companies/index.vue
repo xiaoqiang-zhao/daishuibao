@@ -6,6 +6,46 @@
                 <el-button @click="addClient" icon="el-icon-plus" type="primary">
                     新增客户
                 </el-button>
+                <div class="search-section">
+                    <el-input
+                        placeholder="请输入公司名称进行查询"
+                        v-model="companyName"
+                        @blur="search"
+                        @keyup.enter.native="search"
+                        @clear="search"
+                        size="mini"
+                        suffix-icon="el-icon-search"
+                        clearable>
+                    </el-input>
+                    <el-select
+                        v-model="industry"
+                        @change="search"
+                        @clear="search"
+                        clearable
+                        size="mini"
+                        placeholder="请选择行业">
+                        <el-option
+                            v-for="item in industryList"
+                            :key="item"
+                            :label="item"
+                            :value="item">
+                        </el-option>
+                    </el-select>
+                    <el-select
+                        v-model="payTaxesType"
+                        @change="search"
+                        @clear="search"
+                        clearable
+                        size="mini"
+                        placeholder="请选择纳税人类型">
+                        <el-option
+                            v-for="(item, index) in payTaxesTypeList"
+                            :key="item"
+                            :label="item"
+                            :value="index">
+                        </el-option>
+                    </el-select>
+                </div>
             </header>
             <el-table
                 ref="multipleTable"
@@ -73,6 +113,9 @@
                 background
                 layout="prev, pager, next"
                 :total="total"
+                :current-page.sync="currentPage"
+                :page-size.sync="pageSize"
+                @current-change="currentPageChange"
                 class="pagination">
             </el-pagination>
         </section>
@@ -85,6 +128,7 @@
 /**
  * @file 客户档案
  */
+import map from '@/components/map';
 import processStatistics from '@/components/process-statistics';
 import additionDialog from './additionDialog.vue';
 import updateDialog from './updateDialog.vue';
@@ -97,24 +141,23 @@ export default {
     },
     data() {
         return {
-            activedName: 'a',
+            companyName: '',
+            industry: '',
+            payTaxesType: '',
+            industryList: map.industryList,
+            payTaxesTypeList: map.payTaxesTypeList,
             total: 0,
             tableData: [],
             multipleSelection: [],
-            companyData: null
+            companyData: null,
+            currentPage: 1,
+            pageSize: 20
         };
     },
     mounted() {
-        this.loadData();
+        this.currentPageChange(1);
     },
     methods: {
-
-        loadData() {
-            this.$http.get('/companies').then(res => {
-                this.total = res.data.total;
-                this.tableData = res.data.list;
-            });
-        },
 
         /**
          * 打开新增客户弹框
@@ -133,6 +176,37 @@ export default {
         updateLibrary(companyData) {
             this.companyData = companyData;
             this.$refs.updateDialog.open(companyData);
+        },
+
+        /**
+         * 翻页触发
+         *
+         * @param {Number} pageNumber 页码
+         */
+        currentPageChange(pageNumber) {
+            // 获取搜索条件
+            const queryData = {
+                companyName: this.companyName,
+                industry: this.industry,
+                payTaxesType: this.payTaxesType,
+                pageSize: this.pageSize,
+                pageNumber
+            };
+
+            this.$http.get('/companies', {
+                params: queryData
+            }).then(res => {
+                this.total = res.data.total;
+                this.tableData = res.data.list;
+            });
+        },
+
+        /**
+         * 搜索
+         */
+        search() {
+            this.pageNumber = 1;
+            this.currentPageChange(1);
         }
     }
 }
@@ -143,7 +217,14 @@ export default {
     padding: 0 10px;
     .top-line {
         padding-bottom: 10px;
-        // text-align: right;
+        .search-section {
+            float: right;
+            width: 360px;
+            text-align: right;
+            .el-select {
+                margin-top: 2px;
+            }
+        }
     }
     .pagination {
         text-align: right;

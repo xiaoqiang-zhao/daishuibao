@@ -39,7 +39,7 @@ export default {
         '制造'
     ],
     // 公司类型
-    companyTypeList: [
+    payTaxesTypeList: [
         '一般纳税人',
         '小规模纳税人'
     ]
