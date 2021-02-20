@@ -109,7 +109,13 @@
                             size="mini">
                             更新
                         </el-button>
-                        <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                        <el-button
+                            @click="deleteCompany(scope.row)"
+                            type="danger"
+                            icon="el-icon-delete"
+                            size="mini">
+                            删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -211,6 +217,51 @@ export default {
         search() {
             this.pageNumber = 1;
             this.currentPageChange(1);
+        },
+
+        /**
+         * 删除公司
+         *
+         * @param {Object} row 行数据
+         */
+        deleteCompany(row) {
+            this.$confirm('此操作将删除该客户, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.postDelete(row.companyName);
+            });
+        },
+
+        /**
+         * 发送删除请求
+         * @param {String} companyName 公司名称
+         */
+        postDelete(companyName) {
+            this.$http.post('/companies/delete', {
+                companyName: companyName
+            }).then(res => {
+                if (res.data.isSuccess) {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                    // 移除一条数据
+                    this.tableData.some((item, index) => {
+                        if (item.companyName === companyName) {
+                            this.tableData.splice(index, 1);
+                            return true;
+                        }
+                    });
+                }
+                else {
+                    this.$message({
+                        type: 'error',
+                        message: '删除未成功，请稍后再试!'
+                    });
+                }
+            });
         }
     }
 }
