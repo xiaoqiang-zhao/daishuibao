@@ -64,25 +64,27 @@
                 </el-table-column>
                 <el-table-column
                     prop="industry"
-                    label="所属行业">
+                    label="所属行业"
+                    width="90">
                 </el-table-column>
                 <el-table-column
-                    prop=""
-                    label="会计负责人">
+                    prop="accountingManager"
+                    label="会计负责人"
+                    width="90">
                 </el-table-column>
                 <el-table-column
                     prop="mobile"
                     label="手机号"
-                    width="100">
+                    width="120">
                 </el-table-column>
                 <el-table-column
-                    prop=""
+                    prop="weChartAccount"
                     label="微信号">
                 </el-table-column>
                 <el-table-column
-                    prop=""
+                    prop="businessLicenseNumber"
                     label="营业执照号"
-                    width="110">
+                    width="170">
                 </el-table-column>
                 <el-table-column
                     prop="payTaxesType"
@@ -93,9 +95,8 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop=""
-                    label="电子税务局密码"
-                    width="120">
+                    prop="password"
+                    label="电子税务局密码">
                 </el-table-column>
                 <el-table-column
                     label="操作"

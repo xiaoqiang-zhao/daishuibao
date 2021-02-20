@@ -2,10 +2,19 @@
  * @file 工具函数
  * @author zxq
  */
-
+import uuidv1 from 'uuid/v1';
 import moment from 'moment';
 
 export default {
+
+    // 生成唯一值
+    getUUID() {
+        const opt = {
+            msecs: new Date().getTime()
+        };
+        return uuidv1(opt);
+    },
+
     // 去除前后空格，默认赋空串，防止值为undefined或null时报错
     trim(value = '') {
         return value.replace(/^\s+|\s+$/g, '');

@@ -9,48 +9,76 @@
                 "serialNumber": "0001",
                 "companyName": "AAAAAA 有限公司",
                 "industry": "餐饮",
+                "accountingManager": "赵钱",
+                "mobile": 13000000000,
+                "weChartAccount": "aaaaaa1",
+                "businessLicenseNumber": "012345678912345671",
                 "payTaxesType": 0,
-                "status": 1
+                "status": 1,
+                "password": "ap90svba3h8ls"
             },
             {
                 "id": "2",
                 "serialNumber": "0002",
                 "companyName": "BBBBBB 有限公司",
                 "industry": "餐饮",
+                "accountingManager": "孙李",
+                "mobile": 13000000001,
+                "weChartAccount": "aaaaaa2",
                 "payTaxesType": 1,
-                "status": 2
+                "status": 2,
+                "password": "k20xla3oi58ls"
             },
             {
                 "id": "3",
                 "serialNumber": "0003",
                 "companyName": "CCCCC 有限公司",
                 "industry": "餐饮",
+                "accountingManager": "周吴",
+                "mobile": 13000000002,
+                "weChartAccount": "aaaaaa3",
+                "businessLicenseNumber": "012345678912345672",
                 "payTaxesType": 0,
-                "status": 3
+                "status": 3,
+                "password": "svba3oi5hh8ls"
             },
             {
                 "id": "4",
                 "serialNumber": "0004",
                 "companyName": "DDDD 有限公司",
                 "industry": "餐饮",
+                "accountingManager": "郑王",
+                "mobile": 13000000003,
+                "weChartAccount": "aaaaaa4",
                 "payTaxesType": 0,
-                "status": 4
+                "status": 4,
+                "password": "svba3oi5hh8ls"
             },
             {
                 "id": "5",
                 "serialNumber": "0005",
                 "companyName": "EEEEE 有限公司",
                 "industry": "餐饮",
+                "accountingManager": "冯陈",
+                "mobile": 13000000004,
+                "weChartAccount": "aaaaaa5",
+                "businessLicenseNumber": "012345678912345673",
                 "payTaxesType": 1,
-                "status": 5
+                "status": 5,
+                "password": "svba3oi5hh8ls"
             },
             {
                 "id": "6",
                 "serialNumber": "0006",
-                "companyName": "XXXXX 有限公司",
+                "companyName": "FFFFFF 有限公司",
                 "industry": "餐饮",
+                "accountingManager": "褚卫",
+                "mobile": 13000000005,
+                "weChartAccount": "aaaaaa6",
+                "businessLicenseNumber": "012345678912345674",
                 "payTaxesType": 1,
-                "status": 2
+                "status": 2,
+                "password": "svba3oi5hh8ls"
             }
         ]
     }
