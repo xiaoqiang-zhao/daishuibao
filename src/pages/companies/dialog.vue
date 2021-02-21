@@ -200,12 +200,10 @@ export default {
                 businessLicenseNumber: '',
                 payTaxesType: '',
                 password: ''
-                // suppliers: [],
-                // customers: []
             },
+            rules: {},
             suppliersTableData: [],
-            customersTableData: [],
-            rules: {}
+            customersTableData: []
         };
     },
     methods: {
@@ -216,21 +214,29 @@ export default {
         open(companyData) {
             this.dialogVisible = true;
             this.companyData = companyData || {};
+            // 清除数据
+            this.suppliersTableData = [];
+            this.customersTableData = [];
+            for (let key of Object.keys(this.form)) {
+                this.form[key] = '';
+            }
+
             // 编辑
             if (companyData) {
                 this.type = 'edit';
                 this.title = companyData.companyName;
                 // 回填数据
-                // this.form
+                for (let key of Object.keys(this.form)) {
+                    this.form[key] = companyData[key];
+                }
                 // 供应商库 与 客户库
-                this.suppliersTableData = [];
                 companyData.suppliers.forEach(item => {
                     this.suppliersTableData.push({
                         companyName: item,
                         type: 'show'
                     });
                 });
-                this.customersTableData = [];
+                
                 companyData.customers.forEach(item => {
                     this.customersTableData.push({
                         companyName: item,
