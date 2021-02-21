@@ -8,13 +8,14 @@
                 v-if="companyData"
                 ref="form"
                 :model="form"
-                label-width="120px"
+                :rules="rules"
+                label-width="140px"
                 size="mini"
                 class="form-section">
-                <el-form-item label="公司名称">
+                <el-form-item label="公司名称" prop="companyName">
                     <el-input v-model="form.companyName" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="所属行业">
+                <el-form-item label="所属行业" prop="">
                     <el-select v-model="form.industry" placeholder="请选择">
                         <el-option
                             v-for="item in industryList"
@@ -24,47 +25,47 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="会计负责人">
+                <el-form-item label="会计负责人" prop="accountingManager">
                     <el-input v-model="form.accountingManager" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号">
+                <el-form-item label="手机号" prop="mobile">
                     <el-input v-model="form.mobile" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="微信号">
+                <el-form-item label="微信号" prop="weChartAccount">
                     <el-input v-model="form.weChartAccount" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="营业执照号">
+                <el-form-item label="营业执照号" prop="businessLicenseNumber">
                     <el-input v-model="form.businessLicenseNumber" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="纳税类型">
+                <el-form-item label="纳税类型" prop="payTaxesType">
                     <el-select v-model="form.payTaxesType" placeholder="请选择">
                         <el-option
-                            v-for="item in payTaxesTypeList"
+                            v-for="(item, index) in payTaxesTypeList"
                             :key="item"
                             :label="item"
-                            :value="item">
+                            :value="index">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="电子税务局密码">
+                <el-form-item label="电子税务局密码" prop="password">
                     <el-input v-model="form.password" placeholder="请输入"></el-input>
                 </el-form-item>
                 <template v-if="type === 'add'">
-                    <el-form-item label="资产负债表">
+                    <el-form-item label="资产负债表" prop="">
                         <el-upload
                             action="https://jsonplaceholder.typicode.com/posts/"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【资产负债表】excel</el-button>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="利润表">
+                    <el-form-item label="利润表" prop="">
                         <el-upload
                             action="https://jsonplaceholder.typicode.com/posts/"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【利润表】excel</el-button>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="银行流水表">
+                    <el-form-item label="银行流水表" prop="">
                         <el-upload
                             action="https://jsonplaceholder.typicode.com/posts/"
                             class="upload-item">
@@ -184,6 +185,10 @@ export default {
     props: {
     },
     data() {
+        const requiredRule = {
+            required: true,
+            message: '请填写'
+        };
         return {
             dialogVisible: false,
             title: '',
@@ -201,7 +206,16 @@ export default {
                 payTaxesType: '',
                 password: ''
             },
-            rules: {},
+            rules: {
+                companyName: requiredRule,
+                industry: requiredRule,
+                accountingManager: requiredRule,
+                mobile: requiredRule,
+                weChartAccount: requiredRule,
+                businessLicenseNumber: requiredRule,
+                payTaxesType: requiredRule,
+                password: requiredRule
+            },
             suppliersTableData: [],
             customersTableData: []
         };
