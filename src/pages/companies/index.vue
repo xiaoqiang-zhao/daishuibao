@@ -48,7 +48,6 @@
                 </div>
             </header>
             <el-table
-                ref="multipleTable"
                 stripe
                 :data="tableData"
                 tooltip-effect="dark"

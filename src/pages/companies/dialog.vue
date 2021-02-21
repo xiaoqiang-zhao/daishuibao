@@ -91,12 +91,35 @@
             <section class="tabs-container">
                 <el-tabs value="suppliers" class="tab suppliers">
                     <el-tab-pane label="供应商库" name="suppliers">
-                        供应商库
+                        <el-table
+                            border
+                            :data="suppliersTableData"
+                            tooltip-effect="dark"
+                            style="width: 100%">
+                            <el-table-column label="编号" width="60" type="index">
+                            </el-table-column>
+                            <el-table-column
+                                prop="companyName"
+                                label="公司名称">
+                            </el-table-column>
+                        </el-table>
                     </el-tab-pane>
                 </el-tabs>
                 <el-tabs value="customers" class="tab customers">
                     <el-tab-pane label="客户库" name="customers">
-                        供应商库
+                        <el-table
+                            border
+                            :data="customersTableData"
+                            tooltip-effect="dark"
+                            style="width: 100%">
+                            <el-table-column label="编号" width="60">
+                            </el-table-column>
+                            <el-table-column
+                                prop="companyName"
+                                label="公司名称">
+                            </el-table-column>
+                        </el-table>
+                        
                     </el-tab-pane>
                 </el-tabs>
             </section>
@@ -131,10 +154,12 @@ export default {
                 weChartAccount: '',
                 businessLicenseNumber: '',
                 payTaxesType: '',
-                password: '',
-                suppliers: [],
-                customers: []
+                password: ''
+                // suppliers: [],
+                // customers: []
             },
+            suppliersTableData: [],
+            customersTableData: [],
             rules: {}
         };
     },
@@ -152,6 +177,21 @@ export default {
                 this.title = companyData.companyName;
                 // 回填数据
                 // this.form
+                // 供应商库 与 客户库
+                this.suppliersTableData = [];
+                companyData.suppliers.forEach(item => {
+                    this.suppliersTableData.push({
+                        companyName: item,
+                        type: 'show'
+                    });
+                });
+                this.customersTableData = [];
+                companyData.customers.forEach(item => {
+                    this.customersTableData.push({
+                        companyName: item,
+                        type: 'show'
+                    });
+                });
             }
             // 新建
             else {

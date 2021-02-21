@@ -15,7 +15,9 @@
                 "businessLicenseNumber": "012345678912345671",
                 "payTaxesType": 0,
                 "status": 1,
-                "password": "ap90svba3h8ls"
+                "password": "ap90svba3h8ls",
+                "suppliers": ["公司A", "公司B"],
+                "customers": ["A公司", "B公司"]
             },
             {
                 "id": "2",
@@ -27,7 +29,9 @@
                 "weChartAccount": "aaaaaa2",
                 "payTaxesType": 1,
                 "status": 2,
-                "password": "k20xla3oi58ls"
+                "password": "k20xla3oi58ls",
+                "suppliers": ["公司C", "公司D"],
+                "customers": ["C公司", "D公司"]
             },
             {
                 "id": "3",
@@ -40,7 +44,9 @@
                 "businessLicenseNumber": "012345678912345672",
                 "payTaxesType": 0,
                 "status": 3,
-                "password": "svba3oi5hh8ls"
+                "password": "svba3oi5hh8ls",
+                "suppliers": ["公司C", "公司D"],
+                "customers": ["C公司", "D公司"]
             },
             {
                 "id": "4",
@@ -52,7 +58,9 @@
                 "weChartAccount": "aaaaaa4",
                 "payTaxesType": 0,
                 "status": 4,
-                "password": "svba3oi5hh8ls"
+                "password": "svba3oi5hh8ls",
+                "suppliers": ["公司C", "公司D"],
+                "customers": ["C公司", "D公司"]
             },
             {
                 "id": "5",
@@ -65,7 +73,9 @@
                 "businessLicenseNumber": "012345678912345673",
                 "payTaxesType": 1,
                 "status": 5,
-                "password": "svba3oi5hh8ls"
+                "password": "svba3oi5hh8ls",
+                "suppliers": ["公司C", "公司D"],
+                "customers": ["C公司", "D公司"]
             },
             {
                 "id": "6",
@@ -78,7 +88,9 @@
                 "businessLicenseNumber": "012345678912345674",
                 "payTaxesType": 1,
                 "status": 2,
-                "password": "svba3oi5hh8ls"
+                "password": "svba3oi5hh8ls",
+                "suppliers": ["公司C", "公司D"],
+                "customers": ["C公司", "D公司"]
             }
         ]
     }
