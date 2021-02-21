@@ -3,7 +3,7 @@
         :title="title"
         :visible.sync="dialogVisible"
         width="800px">
-        <section>
+        <section class="dialog-body">
             <el-form
                 v-if="companyData"
                 ref="form"
@@ -73,55 +73,100 @@
                     </el-form-item>
                 </template>
             </el-form>
-        </section>
-        <section class="suppliers-and-customers">
-            <section class="top-section">
-                <div class="explain">
-                    <div>
-                        1. 请务必保证表格内公司名称与发票上名称相同，否则将影响会计凭证生成
+            <section class="suppliers-and-customers">
+                <section class="top-section">
+                    <div class="explain">
+                        <div>
+                            1. 请务必保证表格内公司名称与发票上名称相同，否则将影响会计凭证生成
+                        </div>
+                        <div>
+                            2. 可从Excel复制内容粘贴至表格
+                        </div>
+                        <div>
+                            3. 该名单将根据每月发票信息自动更新
+                        </div>
                     </div>
-                    <div>
-                        2. 可从Excel复制内容粘贴至表格
-                    </div>
-                    <div>
-                        3. 该名单将根据每月发票信息自动更新
-                    </div>
-                </div>
-            </section>
-            <section class="tabs-container">
-                <el-tabs value="suppliers" class="tab suppliers">
-                    <el-tab-pane label="供应商库" name="suppliers">
-                        <el-table
-                            border
-                            :data="suppliersTableData"
-                            tooltip-effect="dark"
-                            style="width: 100%">
-                            <el-table-column label="编号" width="60" type="index">
-                            </el-table-column>
-                            <el-table-column
-                                prop="companyName"
-                                label="公司名称">
-                            </el-table-column>
-                        </el-table>
-                    </el-tab-pane>
-                </el-tabs>
-                <el-tabs value="customers" class="tab customers">
-                    <el-tab-pane label="客户库" name="customers">
-                        <el-table
-                            border
-                            :data="customersTableData"
-                            tooltip-effect="dark"
-                            style="width: 100%">
-                            <el-table-column label="编号" width="60">
-                            </el-table-column>
-                            <el-table-column
-                                prop="companyName"
-                                label="公司名称">
-                            </el-table-column>
-                        </el-table>
-                        
-                    </el-tab-pane>
-                </el-tabs>
+                </section>
+                <section class="tabs-container">
+                    <el-tabs value="suppliers" class="tab suppliers">
+                        <el-tab-pane label="供应商库" name="suppliers">
+                            <el-table
+                                border
+                                :data="suppliersTableData"
+                                tooltip-effect="dark"
+                                style="width: 100%">
+                                <el-table-column
+                                    label="编号"
+                                    width="60"
+                                    type="index"
+                                    align="center">
+                                </el-table-column>
+                                <el-table-column
+                                    prop="companyName"
+                                    label="公司名称">
+                                    <template slot-scope="scope">
+                                        <template v-if="scope.row.type === 'show'">
+                                            {{scope.row.companyName}}
+                                        </template>
+                                        <el-input
+                                            v-else
+                                            v-model="scope.row.companyName"
+                                            placeholder="请输入公司名称"
+                                            size="mini">
+                                        </el-input>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </el-tab-pane>
+                        <el-button
+                            type="primary"
+                            size="mini"
+                            icon="el-icon-circle-plus-outline"
+                            class="add-btn"
+                            @click="addSupplierOrcustomer('supplier')">
+                            添加
+                        </el-button>
+                    </el-tabs>
+                    <el-tabs value="customers" class="tab customers">
+                        <el-tab-pane label="客户库" name="customers">
+                            <el-table
+                                border
+                                :data="customersTableData"
+                                tooltip-effect="dark"
+                                style="width: 100%">
+                                <el-table-column
+                                    label="编号"
+                                    width="60"
+                                    type="index"
+                                    align="center">
+                                </el-table-column>
+                                <el-table-column
+                                    prop="companyName"
+                                    label="公司名称">
+                                    <template slot-scope="scope">
+                                        <template v-if="scope.row.type === 'show'">
+                                            {{scope.row.companyName}}
+                                        </template>
+                                        <el-input
+                                            v-else
+                                            v-model="scope.row.companyName"
+                                            placeholder="请输入公司名称"
+                                            size="mini">
+                                        </el-input>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                            <el-button
+                                @click="addSupplierOrcustomer('customer')"
+                                type="primary"
+                                size="mini"
+                                icon="el-icon-circle-plus-outline"
+                                class="add-btn">
+                                添加
+                            </el-button>
+                        </el-tab-pane>
+                    </el-tabs>
+                </section>
             </section>
         </section>
         <div slot="footer" class="dialog-footer">
@@ -207,6 +252,16 @@ export default {
             // this.$http.get(`/companies/${this.companyData.id}/suppliers-and-customers`).then(res => {
             //     console.log(res.data);
             // });
+        },
+
+        /**
+         * 添加供应商或客户
+         */
+        addSupplierOrcustomer(type) {
+            this[`${type}sTableData`].push({
+                companyName: '',
+                type: 'new'
+            });
         }
     }
 }
@@ -214,6 +269,10 @@ export default {
 
 <style lang="less" scoped>
 @import '../../assets/var.less';
+.dialog-body {
+    max-height: 500px;
+    overflow: auto;
+}
 .form-section {
     display: flex;
     flex-wrap: wrap;
@@ -248,12 +307,13 @@ export default {
             flex: 1;
         }
 
-        .suppliers {
-            margin-right: 10px;
-        }
-
+        .suppliers,
         .customers {
-            margin-left: 10px;
+            margin-right: 5px;
+        }
+        .add-btn {
+            float: right;
+            margin-top: 5px;
         }
     }
 }
