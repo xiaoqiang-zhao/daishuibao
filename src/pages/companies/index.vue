@@ -3,7 +3,7 @@
         <process-statistics/>
         <section class="common-block-section">
             <header class="top-line">
-                <el-button @click="addClient" icon="el-icon-plus" type="primary">
+                <el-button @click="openDialog(null)" icon="el-icon-plus" type="primary">
                     新增客户
                 </el-button>
                 <div class="search-section">
@@ -103,7 +103,7 @@
                     width="200">
                     <template slot-scope="scope">
                         <el-button
-                            @click="updateLibrary(scope.row)"
+                            @click="openDialog(scope.row)"
                             type="primary"
                             icon="el-icon-edit"
                             size="mini">
@@ -129,8 +129,7 @@
                 class="pagination">
             </el-pagination>
         </section>
-        <additionDialog ref="additionDialog"/>
-        <updateDialog ref="updateDialog" :companyData="companyData"/>
+        <company-dialog ref="dialog"/>
     </section>
 </template>
 
@@ -140,14 +139,12 @@
  */
 import map from '@/components/map';
 import processStatistics from '@/components/process-statistics';
-import additionDialog from './additionDialog.vue';
-import updateDialog from './updateDialog.vue';
+import dialog from './dialog.vue';
 
 export default {
     components: {
         processStatistics,
-        additionDialog,
-        updateDialog
+        companyDialog: dialog
     },
     data() {
         return {
@@ -159,7 +156,6 @@ export default {
             total: 0,
             tableData: [],
             multipleSelection: [],
-            companyData: null,
             currentPage: 1,
             pageSize: 20
         };
@@ -170,22 +166,12 @@ export default {
     methods: {
 
         /**
-         * 打开新增客户弹框
+         * 打开弹框
+         * 
+         * @param {Object} companyData 编辑时公司数据，新建时为 null
          */
-        addClient() {
-            this.$refs.additionDialog.open();
-        },
-
-        /**
-         * 编辑客户
-         */
-        editCompanies() {
-
-        },
-
-        updateLibrary(companyData) {
-            this.companyData = companyData;
-            this.$refs.updateDialog.open(companyData);
+        openDialog(companyData) {
+            this.$refs.dialog.open(companyData);
         },
 
         /**
