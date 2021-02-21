@@ -2,6 +2,8 @@
     "code": 0,
     "message": "",
     "data": {
-        "isSuccess": true
+        "isSuccess": true,
+        "serialNumber": "0007",
+        "message": "公司名称已存在"
     }
 }

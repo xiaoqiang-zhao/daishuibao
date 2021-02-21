@@ -128,7 +128,7 @@
                 class="pagination">
             </el-pagination>
         </section>
-        <company-dialog ref="dialog"/>
+        <company-dialog ref="dialog" @add="add" @modify="modify"/>
     </section>
 </template>
 
@@ -245,6 +245,34 @@ export default {
                         type: 'error',
                         message: '删除未成功，请稍后再试!'
                     });
+                }
+            });
+        },
+
+        /**
+         * 添加一行
+         * 
+         * @param {Object} 一行数据
+         */
+        add(data) {
+            this.tableData.push(data);
+        },
+
+        /**
+         * 修改一行
+         * 
+         * @param {Object} 一行数据
+         */
+        modify(data) {
+            this.tableData.some((item, index) => {
+                if (item.companyName === data.companyName) {
+                    // 替换字段
+                    for(let key of Object.keys(this.tableData[index])) {
+                        if (key !== 'serialNumber') {
+                            this.tableData[index][key] = data[key];
+                        }
+                    }
+                    return true;
                 }
             });
         }

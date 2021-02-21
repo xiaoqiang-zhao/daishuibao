@@ -14,9 +14,13 @@
                 size="mini"
                 class="form-section">
                 <el-form-item label="公司名称" prop="companyName">
-                    <el-input v-model="form.companyName" placeholder="请输入"></el-input>
+                    <el-input
+                        v-model="form.companyName"
+                        :disabled="companyNameDisable"
+                        placeholder="请输入">
+                    </el-input>
                 </el-form-item>
-                <el-form-item label="所属行业" prop="">
+                <el-form-item label="所属行业" prop="industry">
                     <el-select v-model="form.industry" placeholder="请选择">
                         <el-option
                             v-for="item in industryList"
@@ -52,11 +56,14 @@
                     <el-input v-model="form.password" placeholder="请输入"></el-input>
                 </el-form-item>
                 <template v-if="type === 'add'">
-                    <el-form-item label="资产负债表" prop="balanceStatement">
+                    <el-form-item label="资产负债表" prop="balanceStatementFileId">
                         <el-upload
                             :multiple="false"
                             :limit="1"
-                            :data="{id: form.balanceStatementFileId}"
+                            :data="{id: balanceStatementFileId}"
+                            :with-credentials="true"
+                            :on-success="addBalanceStatementFile"
+                            :on-remove="removeBalanceStatementFile"
                             accept=".xlsx,.xls"
                             action="/api/upload/balanceStatement"
                             class="upload-item">
@@ -67,7 +74,10 @@
                         <el-upload
                             :multiple="false"
                             :limit="1"
-                            :data="{id: form.balanceStatementFileId}"
+                            :data="{id: balanceStatementFileId}"
+                            :with-credentials="true"
+                            :on-success="addIncomeStatementFile"
+                            :on-remove="removeIncomeStatementFile"
                             accept=".xlsx,.xls"
                             action="/api/upload/incomeStatement"
                             class="upload-item">
@@ -78,7 +88,10 @@
                         <el-upload
                             :multiple="false"
                             :limit="1"
-                            :data="{id: form.balanceStatementFileId}"
+                            :data="{id: balanceStatementFileId}"
+                            :with-credentials="true"
+                            :on-success="addBankStatementFile"
+                            :on-remove="removeBankStatementFile"
                             accept=".xlsx,.xls"
                             action="/api/upload/bankStatement"
                             class="upload-item">
@@ -125,6 +138,7 @@
                                         <el-input
                                             v-else
                                             v-model="scope.row.companyName"
+                                            :maxlength="20"
                                             placeholder="请输入公司名称"
                                             size="mini">
                                         </el-input>
@@ -164,6 +178,7 @@
                                         <el-input
                                             v-else
                                             v-model="scope.row.companyName"
+                                            :maxlength="20"
                                             placeholder="请输入公司名称"
                                             size="mini">
                                         </el-input>
@@ -204,6 +219,11 @@ export default {
             trigger: 'blur',
             message: '请填写'
         };
+        const requiredFileRule = {
+            required: true,
+            trigger: 'blur',
+            message: '请上传'
+        };
         return {
             dialogVisible: false,
             title: '',
@@ -211,6 +231,11 @@ export default {
             companyData: null,
             industryList: map.industryList,
             payTaxesTypeList: map.payTaxesTypeList,
+            // 文件列表
+            balanceStatementFileId: '',
+            incomeStatementFileId: '',
+            bankStatementFileId: '',
+            companyNameDisable: false,
             form: {
                 companyName: '',
                 industry: '',
@@ -220,6 +245,8 @@ export default {
                 businessLicenseNumber: '',
                 payTaxesType: '',
                 password: '',
+
+                // 上传文件的校验
                 balanceStatementFileId: '',
                 incomeStatementFileId: '',
                 bankStatementFileId: ''
@@ -232,7 +259,10 @@ export default {
                 weChartAccount: requiredRule,
                 businessLicenseNumber: requiredRule,
                 payTaxesType: requiredRule,
-                password: requiredRule
+                password: requiredRule,
+                balanceStatementFileId: requiredFileRule,
+                incomeStatementFileId: requiredFileRule,
+                bankStatementFileId: requiredFileRule
             },
             suppliersTableData: [],
             customersTableData: []
@@ -249,7 +279,8 @@ export default {
 
             // 编辑
             if (companyData) {
-                this.type = 'edit';
+                this.type = 'modify';
+                this.companyNameDisable = true;
                 this.title = companyData.companyName;
                 // 回填数据
                 for (let key of Object.keys(this.form)) {
@@ -274,11 +305,54 @@ export default {
             else {
                 this.type = 'add';
                 this.title = '新建客户';
+                this.companyNameDisable = false;
 
-                this.form.balanceStatementFileId = utiles.getUUID();
-                this.form.incomeStatementFileId = utiles.getUUID();
-                this.form.bankStatementFileId = utiles.getUUID();
+                this.balanceStatementFileId = utiles.getUUID(1);
+                this.incomeStatementFileId = utiles.getUUID(2);
+                this.bankStatementFileId = utiles.getUUID(3);
             }
+        },
+
+        /**
+         * 添加
+         */
+        addBalanceStatementFile() {
+            this.form.balanceStatementFileId = this.balanceStatementFileId;
+        },
+
+        /**
+         * 移除
+         */
+        removeBalanceStatementFile() {
+            this.form.balanceStatementFileId = '';
+        },
+
+        /**
+         * 添加
+         */
+        addIncomeStatementFile() {
+            this.form.incomeStatementFileId = this.incomeStatementFileId;
+        },
+
+        /**
+         * 移除
+         */
+        removeIncomeStatementFile() {
+            this.form.incomeStatementFileId = '';
+        },
+
+        /**
+         * 添加
+         */
+        addBankStatementFile() {
+            this.form.bankStatementFileId = this.bankStatementFileId;
+        },
+
+        /**
+         * 移除
+         */
+        removeBankStatementFile() {
+            this.form.bankStatementFileId = '';
         },
 
         /**
@@ -305,17 +379,15 @@ export default {
             this.$refs.form.clearValidate();
         },
 
-        // form.balanceStatementFileId
-        beforeUpload(name) {
-            this.form[`${name}StatementFileId`] = utiles.getUUID();
-        },
-
         /**
          * 点击确定后的提交操作
          */
         submit() {
             this.$refs.form.validate(result => {
-                debugger
+                // 校验成功
+                if (result) {
+                    this.postData();
+                }
             });
         },
 
@@ -323,9 +395,56 @@ export default {
          * 提交数据
          */
         postData() {
-            // this.$http.get(`/companies/${this.companyData.id}/suppliers-and-customers`).then(res => {
-            //     console.log(res.data);
-            // });
+            // 添加公司
+            const suppliers = [];
+            const customers = [];
+
+            this.suppliersTableData.forEach(item => {
+                if (item.type === 'new') {
+                    suppliers.push(item.companyName);
+                }
+            });
+
+            this.customersTableData.forEach(item => {
+                if (item.type === 'new') {
+                    customers.push(item.companyName);
+                }
+            });
+
+            this.$http.post(`/company/${this.type}`, {
+                ...this.form,
+                suppliers,
+                customers
+            }).then(res => {
+                // 成功
+                const suppliers = [];
+                const customers = [];
+                this.suppliersTableData.forEach(item => {
+                    suppliers.push(item.companyName);
+                });
+
+                this.customersTableData.forEach(item => {
+                    customers.push(item.companyName);
+                });
+
+                if (res.data.isSuccess) {
+                    let serialNumber;
+                    if (this.type === 'add') {
+                        serialNumber = res.data.serialNumber;
+                    }
+
+                    this.$emit(this.type, {
+                        serialNumber,
+                        ...this.form,
+                        suppliers,
+                        customers
+                    });
+                    this.dialogVisible = false;
+                }
+                else {
+                    this.$message.error(res.data.message);
+                }
+            });
         }
     }
 }
