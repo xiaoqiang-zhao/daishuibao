@@ -52,24 +52,35 @@
                     <el-input v-model="form.password" placeholder="请输入"></el-input>
                 </el-form-item>
                 <template v-if="type === 'add'">
-                    <el-form-item label="资产负债表" prop="">
+                    <el-form-item label="资产负债表" prop="balanceStatement">
                         <el-upload
-
-                            action="/upload"
+                            :multiple="false"
+                            :limit="1"
+                            :data="{id: form.balanceStatementFileId}"
+                            accept=".xlsx,.xls"
+                            action="/api/upload/balanceStatement"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【资产负债表】excel</el-button>
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="利润表" prop="">
                         <el-upload
-                            action="https://jsonplaceholder.typicode.com/posts/"
+                            :multiple="false"
+                            :limit="1"
+                            :data="{id: form.balanceStatementFileId}"
+                            accept=".xlsx,.xls"
+                            action="/api/upload/incomeStatement"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【利润表】excel</el-button>
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="银行流水表" prop="">
                         <el-upload
-                            action="https://jsonplaceholder.typicode.com/posts/"
+                            :multiple="false"
+                            :limit="1"
+                            :data="{id: form.balanceStatementFileId}"
+                            accept=".xlsx,.xls"
+                            action="/api/upload/bankStatement"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【银行流水表】excel</el-button>
                         </el-upload>
@@ -174,13 +185,14 @@
         </section>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            <el-button type="primary" @click="submit">确 定</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script>
 import map from '@/components/map.js';
+import utiles from '@/components/utiles.js';
 import 'element-ui/lib/theme-chalk/upload.css';
 
 export default {
@@ -207,7 +219,10 @@ export default {
                 weChartAccount: '',
                 businessLicenseNumber: '',
                 payTaxesType: '',
-                password: ''
+                password: '',
+                balanceStatementFileId: '',
+                incomeStatementFileId: '',
+                bankStatementFileId: ''
             },
             rules: {
                 companyName: requiredRule,
@@ -259,16 +274,11 @@ export default {
             else {
                 this.type = 'add';
                 this.title = '新建客户';
-            }
-        },
 
-        /**
-         * 提交数据
-         */
-        postData() {
-            // this.$http.get(`/companies/${this.companyData.id}/suppliers-and-customers`).then(res => {
-            //     console.log(res.data);
-            // });
+                this.form.balanceStatementFileId = utiles.getUUID();
+                this.form.incomeStatementFileId = utiles.getUUID();
+                this.form.bankStatementFileId = utiles.getUUID();
+            }
         },
 
         /**
@@ -281,6 +291,9 @@ export default {
             });
         },
 
+        /**
+         * 清除表单和验证
+         */
         clear() {
             // 清除数据
             this.suppliersTableData = [];
@@ -290,6 +303,29 @@ export default {
             }
             // 清除校验
             this.$refs.form.clearValidate();
+        },
+
+        // form.balanceStatementFileId
+        beforeUpload(name) {
+            this.form[`${name}StatementFileId`] = utiles.getUUID();
+        },
+
+        /**
+         * 点击确定后的提交操作
+         */
+        submit() {
+            this.$refs.form.validate(result => {
+                debugger
+            });
+        },
+
+        /**
+         * 提交数据
+         */
+        postData() {
+            // this.$http.get(`/companies/${this.companyData.id}/suppliers-and-customers`).then(res => {
+            //     console.log(res.data);
+            // });
         }
     }
 }
