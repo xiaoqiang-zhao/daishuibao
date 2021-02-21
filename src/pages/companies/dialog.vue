@@ -2,13 +2,14 @@
     <el-dialog
         :title="title"
         :visible.sync="dialogVisible"
+        @close="clear"
         width="800px">
         <section class="dialog-body">
             <el-form
-                v-if="companyData"
                 ref="form"
                 :model="form"
                 :rules="rules"
+                :validate-on-rule-change="false"
                 label-width="140px"
                 size="mini"
                 class="form-section">
@@ -53,7 +54,8 @@
                 <template v-if="type === 'add'">
                     <el-form-item label="资产负债表" prop="">
                         <el-upload
-                            action="https://jsonplaceholder.typicode.com/posts/"
+
+                            action="/upload"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【资产负债表】excel</el-button>
                         </el-upload>
@@ -187,6 +189,7 @@ export default {
     data() {
         const requiredRule = {
             required: true,
+            trigger: 'blur',
             message: '请填写'
         };
         return {
@@ -228,12 +231,6 @@ export default {
         open(companyData) {
             this.dialogVisible = true;
             this.companyData = companyData || {};
-            // 清除数据
-            this.suppliersTableData = [];
-            this.customersTableData = [];
-            for (let key of Object.keys(this.form)) {
-                this.form[key] = '';
-            }
 
             // 编辑
             if (companyData) {
@@ -282,6 +279,17 @@ export default {
                 companyName: '',
                 type: 'new'
             });
+        },
+
+        clear() {
+            // 清除数据
+            this.suppliersTableData = [];
+            this.customersTableData = [];
+            for (let key of Object.keys(this.form)) {
+                this.form[key] = '';
+            }
+            // 清除校验
+            this.$refs.form.clearValidate();
         }
     }
 }
