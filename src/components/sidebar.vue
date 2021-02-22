@@ -47,61 +47,20 @@
 <script>
 export default {
     data() {
-        // const routes = [
-        //     '/client-document',
-        //     '/upload-info',
-        //     '/smart-bill',
-        //     '/one-key-bill',
-        //     '/history'
-        // ];
-
         return {
             activedIndex: null
-            // routes
         };
     },
 
     watch: {
         $route() {
             this.activedIndex = this.$route.path;
-            // this.routes.some(item => {
-            //     if (item === this.$route.path) {
-            //         this.activedIndex = item;
-            //         console.log(item);
-            //         return true;
-            //     }
-            // });
         }
     },
 
     mounted() {
-        // 由于此组件不在 router-view 中，无法及时获取 route 信息
-        // 所以要放在 $nextTick 中执行
-        // this.$nextTick(() => {
-        //     console.log(this.routes, this.$route.path);
-        //     this.routes.some(item => {
-        //         // console.log(this.$route.path);
-        //         if (item === this.$route.path) {
-        //             this.activedIndex = item;
-        //             console.log(item);
-        //             return true;
-        //         }
-        //     });
-        // });
     },
     methods: {
-
-        /**
-         * 菜单选中
-         *
-         * @param {Number} index 索引值
-         */
-        // selectMenuItem(index) {
-        //     if (this.activedIndex !== index) {
-        //         this.activedIndex = index;
-        //         this.$router.push(this.routes[index]);
-        //     }
-        // }
     }
 }
 </script>

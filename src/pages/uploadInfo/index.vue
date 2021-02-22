@@ -28,12 +28,12 @@ export default {
     },
     data() {
         return {
-            activeName: 'second'
+            activeName: 'first'
         };
     },
     methods: {
         handleClick(tab, event) {
-            console.log(tab, event);
+            // console.log(tab, event);
         }
     }
 }
