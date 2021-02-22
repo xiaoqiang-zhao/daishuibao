@@ -30,7 +30,7 @@
             width="55">
         </el-table-column>
         <el-table-column
-            prop="name"
+            prop="serialNumber"
             label="编号"
             width="120">
             <!-- <template slot-scope="scope">{{ scope.row.date }}</template> -->
@@ -45,20 +45,23 @@
             label="所属行业">
         </el-table-column>
         <el-table-column
-            prop="address"
+            prop="accountingManager"
             label="会计负责人">
         </el-table-column>
         <el-table-column
-            prop="address"
+            prop="mobile"
             label="手机号">
         </el-table-column>
         <el-table-column
-            prop="address"
+            prop="weChartAccount"
             label="微信号">
         </el-table-column>
         <el-table-column
             prop="status"
             label="状态">
+            <template slot-scope="scope">
+            {{getStatusText(scope.row.status)}}
+            </template>
         </el-table-column>
         <el-table-column
             label="操作"
@@ -99,6 +102,7 @@
 </template>
 
 <script>
+import map from '@/components/map';
 
 export default {
     components: {
@@ -120,10 +124,26 @@ export default {
          * 加载数据
          */
         loadData() {
-            this.$http.get('/bills').then(res => {
+            this.$http.get('/accountBills').then(res => {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });
+        },
+
+        /**
+         * 将状态编码转为文字
+         * 
+         * @param {Number} status 状态码
+         */
+        getStatusText(status) {
+            let result = '';
+            map.accountStatus.some(item => {
+                if (item.value === status) {
+                    result = item.label;
+                    return true;
+                }
+            });
+            return result;
         },
 
         /**

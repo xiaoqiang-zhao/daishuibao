@@ -17,20 +17,24 @@ export default {
             value: 1
         },
         {
-            label: '待核对资料',
+            label: '待客户上传',
             value: 2
         },
         {
-            label: '待确认',
+            label: '待核对',
             value: 3
         },
         {
-            label: '待报税',
+            label: '核对中',
             value: 4
         },
         {
-            label: '报税完成',
+            label: '尚未抄报税',
             value: 5
+        },
+        {
+            label: '票据异常',
+            value: 6
         }
     ],
     // 行业列表
