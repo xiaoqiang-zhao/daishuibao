@@ -11,7 +11,7 @@ export default {
         unknown: '未知'
     },
     // 报账状态
-    accountStatus: [
+    accountStatusList: [
         {
             label: '待上传资料',
             value: 1

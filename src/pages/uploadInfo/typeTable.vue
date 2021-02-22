@@ -16,6 +16,32 @@
                 返回
             </el-button>
         </template>
+
+        <div class="search-section">
+            <el-input
+                placeholder="请输入公司名称进行查询"
+                v-model="companyName"
+                @keyup.enter.native="search"
+                @clear="search"
+                size="mini"
+                suffix-icon="el-icon-search"
+                clearable>
+            </el-input>
+            <el-select
+                v-model="status"
+                @change="search"
+                @clear="search"
+                clearable
+                size="mini"
+                placeholder="请选择状态">
+                <el-option
+                    v-for="item in accountStatusList"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+            </el-select>
+        </div>
     </section>
     <el-table
         ref="multipleTable"
@@ -67,9 +93,8 @@
             label="操作"
             width="250">
             <template slot-scope="scope">
-                <template>
+                <template v-if="scope.row.status === 1">
                     <el-button
-                        v-if="scope.row.status === 1"
                         type="primary"
                         icon="el-icon-upload"
                         size="mini">
@@ -119,6 +144,9 @@
         background
         layout="prev, pager, next"
         :total="total"
+        :current-page.sync="currentPage"
+        :page-size.sync="pageSize"
+        @current-change="currentPageChange"
         class="pagination">
     </el-pagination>
 </section>
@@ -132,22 +160,38 @@ export default {
     },
     data() {
         return {
-            activedName: 'a',
+            companyName: '',
+            status: '',
             total: 0,
+            currentPage: 1,
+            pageSize: 20,
             tableData: [],
-            isCheckStatus: false
+            isCheckStatus: false,
+            accountStatusList: map.accountStatusList
         };
     },
     mounted() {
-        this.loadData();
+        this.currentPageChange(1);
     },
     methods: {
 
         /**
-         * 加载数据
+         * 翻页触发
+         *
+         * @param {Number} pageNumber 页码
          */
-        loadData() {
-            this.$http.get('/accountBills').then(res => {
+        currentPageChange(pageNumber) {
+            // 获取搜索条件
+            const queryData = {
+                companyName: this.companyName,
+                status: this.status,
+                pageSize: this.pageSize,
+                pageNumber
+            };
+
+            this.$http.get('/accountBills', {
+                params: queryData
+            }).then(res => {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });
@@ -160,13 +204,21 @@ export default {
          */
         getStatusText(status) {
             let result = '';
-            map.accountStatus.some(item => {
+            map.accountStatusList.some(item => {
                 if (item.value === status) {
                     result = item.label;
                     return true;
                 }
             });
             return result;
+        },
+
+        /**
+         * 搜索
+         */
+        search() {
+            this.pageNumber = 1;
+            this.currentPageChange(1);
         },
 
         /**
@@ -188,12 +240,9 @@ export default {
                     lock: true,
                     text: '核对中，请稍等...',
                     spinner: 'el-icon-loading',
-                    // spinner: 'iconfont icon-jindutiao1',
                     background: 'rgba(0, 0, 0, 0.7)'
                 });
                 setTimeout(() => {
-                    // loading.close();
-                    debugger
                     loading.text = '核对中，请稍等...  37/209';
                 }, 2000);
             });
@@ -223,6 +272,16 @@ export default {
     padding: 0 10px;
     .top-line {
         padding-bottom: 10px;
+
+        .search-section {
+            float: right;
+            width: 200px;
+            text-align: right;
+            .el-select {
+                margin-top: 2px;
+                width: 100%;
+            }
+        }
     }
     .pagination {
         text-align: right;

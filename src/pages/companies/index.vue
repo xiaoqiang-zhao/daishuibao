@@ -10,7 +10,6 @@
                     <el-input
                         placeholder="请输入公司名称进行查询"
                         v-model="companyName"
-                        @blur="search"
                         @keyup.enter.native="search"
                         @clear="search"
                         size="mini"
