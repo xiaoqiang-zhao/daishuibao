@@ -67,26 +67,49 @@
             label="操作"
             width="250">
             <template slot-scope="scope">
+                <template>
+                    <el-button
+                        v-if="scope.row.status === 1"
+                        type="primary"
+                        icon="el-icon-upload"
+                        size="mini">
+                        上传资料
+                    </el-button>
+                    <el-button
+                        v-if="scope.row.payTaxesType === 1"
+                        type="primary"
+                        icon="el-icon-coordinate"
+                        size="mini">
+                        零账簿处理
+                    </el-button>
+                </template>
                 <el-button
-                    v-if="scope.row.status === 1"
+                    v-if="scope.row.status === 2 || scope.row.status === 3"
                     type="primary"
-                    icon="el-icon-upload"
+                    icon="el-icon-view"
                     size="mini">
-                    上传资料
+                    查看资料
                 </el-button>
                 <el-button
-                    v-if="scope.row.status === 3"
+                    v-if="scope.row.status === 2"
                     type="success"
                     icon="el-icon-tickets"
                     size="mini">
-                    查看详情
+                    微信催办
                 </el-button>
                 <el-button
-                    v-if="scope.row.status === 3"
+                    v-if="scope.row.status === 5 || scope.row.status === 6"
                     type="warning"
                     icon="el-icon-s-claim"
                     size="mini">
                     强制做账
+                </el-button>
+                <el-button
+                    v-if="scope.row.status === 6"
+                    type="primary"
+                    icon="el-icon-view"
+                    size="mini">
+                    查看详情
                 </el-button>
             </template>
         </el-table-column>

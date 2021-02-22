@@ -19,6 +19,20 @@
                 "customers": ["A公司", "B公司"]
             },
             {
+                "serialNumber": "0001",
+                "companyName": "AAAAAA 有限公司",
+                "industry": "餐饮",
+                "accountingManager": "赵钱",
+                "mobile": 13000000000,
+                "weChartAccount": "aaaaaa1",
+                "businessLicenseNumber": "012345678912345671",
+                "payTaxesType": 1,
+                "status": 1,
+                "password": "ap90svba3h8ls",
+                "suppliers": ["公司A", "公司B"],
+                "customers": ["A公司", "B公司"]
+            },
+            {
                 "serialNumber": "00002",
                 "companyName": "BBBBBB 有限公司",
                 "industry": "餐饮",
