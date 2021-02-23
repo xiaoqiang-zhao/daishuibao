@@ -49,10 +49,11 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="handleSelectionChange">
+        @selection-change="selectionChange">
         <el-table-column
             v-if="isCheckStatus"
             type="selection"
+            label="全选"
             width="55">
         </el-table-column>
         <el-table-column
@@ -97,7 +98,8 @@
                     <el-button
                         type="primary"
                         icon="el-icon-upload"
-                        size="mini">
+                        size="mini"
+                        @click="toDetail(scope.row)">
                         上传资料
                     </el-button>
                     <el-button
@@ -249,19 +251,20 @@ export default {
 
         },
 
-        toggleSelection(rows) {
-            if (rows) {
-                rows.forEach(row => {
-                    this.$refs.multipleTable.toggleRowSelection(row);
-                });
-            }
-            else {
-                this.$refs.multipleTable.clearSelection();
-            }
+        /**
+         * 选项改变
+         */
+        selectionChange(val) {
+            this.multipleSelection = val;
         },
 
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
+        /**
+         * 到上传详情页
+         */
+        toDetail(data) {
+            const str = JSON.stringify(data);
+            localStorage.setItem('currentAccountBill', str);
+            this.$router.push('/upload-info/detail');
         }
     }
 }

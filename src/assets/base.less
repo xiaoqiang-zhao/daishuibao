@@ -43,15 +43,16 @@ a {
 // 通用文本块
 .common-text-block-section {
     .title-section {
-        @height: 56px;
         border-bottom: 1px solid #eee;
-        margin: -20px -20px 13px;
-        padding: 0 20px;
-        line-height: @height;
+        margin: -20px -20px 20px -20px;
         font-size: 16px;
+        .title {
+            border-left: 4px solid #1890ff;
+            padding-left: 10px;
+            margin: 10px 0;
+        }
         .el-button--text {
             float: right;
-            line-height: @height;
             padding: 0;
         }
         .iconfont {

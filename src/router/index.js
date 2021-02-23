@@ -33,6 +33,11 @@ export default new Router({
             path: '/upload-info',
             component: () => import('@/pages/uploadInfo/index')
         },
+         // 信息上传 详情页
+         {
+            path: '/upload-info/detail',
+            component: () => import('@/pages/uploadInfo/detail')
+        },
         // 智能做账
         {
             path: '/smart-bill',

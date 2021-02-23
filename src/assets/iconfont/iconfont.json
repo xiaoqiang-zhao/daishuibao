@@ -6,11 +6,74 @@
   "description": "代账宝",
   "glyphs": [
     {
-      "icon_id": "11064389",
-      "name": "进度",
+      "icon_id": "2155851",
+      "name": "银行",
+      "font_class": "bank",
+      "unicode": "e6f2",
+      "unicode_decimal": 59122
+    },
+    {
+      "icon_id": "2945872",
+      "name": "微信",
+      "font_class": "wechart",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "3148559",
+      "name": "名称",
+      "font_class": "name",
+      "unicode": "e70a",
+      "unicode_decimal": 59146
+    },
+    {
+      "icon_id": "9645981",
+      "name": "会计中级",
+      "font_class": "man",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "11192658",
+      "name": "工资",
+      "font_class": "salary",
+      "unicode": "e763",
+      "unicode_decimal": 59235
+    },
+    {
+      "icon_id": "11680637",
+      "name": "库存",
+      "font_class": "inventory",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "15299701",
+      "name": "电 话",
+      "font_class": "phone",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "8869108",
+      "name": "百分比 (2)",
+      "font_class": "percent2",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "11680423",
+      "name": "倒计时，沙漏",
       "font_class": "sand-clock",
-      "unicode": "e634",
-      "unicode_decimal": 58932
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "3944790",
+      "name": "百分比",
+      "font_class": "percent",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
     },
     {
       "icon_id": "1650271",
@@ -46,20 +109,6 @@
       "font_class": "upload",
       "unicode": "e61b",
       "unicode_decimal": 58907
-    },
-    {
-      "icon_id": "18986527",
-      "name": "右展开",
-      "font_class": "to-right",
-      "unicode": "e64b",
-      "unicode_decimal": 58955
-    },
-    {
-      "icon_id": "18986533",
-      "name": "左折叠",
-      "font_class": "to-left",
-      "unicode": "e64d",
-      "unicode_decimal": 58957
     },
     {
       "icon_id": "15258736",
