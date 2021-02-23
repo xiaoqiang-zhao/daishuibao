@@ -1,28 +1,11 @@
-# 信息上传保存
-
-> 用于信息上传模块。
-
-## url
-
-```
-POST: /api/accountBills/getInfo
-```
-
-## 入参
-
-`companyName` 公司名称
-
-## 出参
-
-todo 磊哥
-```json
 {
-    "companyName": "AAAA 有限公司",
+    "code": 0,
+    "message": "",
     "data": {
         "customerUploadInfo": {
             "inventory": 0,
-            "salary": 1,
-            "bank": 1
+            "salary": 0,
+            "bank": 0
         },
         "artificialInput": [
             {
@@ -48,14 +31,3 @@ todo 磊哥
         ]
     }
 }
-```
-
-`customerUploadInfo.inventory` 库存信息 是否上传
-
-`customerUploadInfo.salary` 工资信息 是否上传
-
-`customerUploadInfo.bank` 银行流水 是否上传
-
-0: 未上传，1: 已上传
-
-`artificialInput` 手动录入分录

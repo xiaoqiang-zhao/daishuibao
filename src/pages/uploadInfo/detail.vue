@@ -31,13 +31,13 @@
                 <div class="text-section upload-info-section">
                     <div class="left">
                         <div class="single-line iconfont icon-inventory">
-                            库存信息: <span class="uploaded">已上传</span>
+                            库存信息: <span :class="{uploaded: uploadInfo.inventory}">{{uploadInfo.inventory ? '已上传' : '未上传' }}</span>
                         </div>
                         <div class="single-line iconfont icon-salary">
-                            工资信息: <span>未上传</span>
+                            工资信息: <span  :class="{uploaded: uploadInfo.salary}">{{uploadInfo.salary ? '已上传' : '未上传' }}</span>
                         </div>
                         <div class="single-line iconfont icon-bank">
-                            银行流水: <span class="bank">未上传</span>
+                            银行流水: <span class="bank"  :class="{uploaded: uploadInfo.bank}">{{uploadInfo.bank ? '已上传' : '未上传' }}</span>
                         </div>
                     </div>
                     <div class="right">
@@ -76,13 +76,21 @@
 export default {
     data() {
         return {
-            accountBillData: {}
+            accountBillData: {},
+            uploadInfo: {}
         };
     },
     mounted() {
         const str = localStorage.getItem('currentAccountBill');
         const data = JSON.parse(str);
         this.accountBillData = data;
+
+        // 获取上传相关信息
+        this.$http.get('/accountBills/getInfo', {
+            compamyName: data.compamyName
+        }).then(res => {
+            this.uploadInfo = res.data.customerUploadInfo;
+        });
     }
     
 }
