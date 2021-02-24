@@ -125,20 +125,70 @@
                         手动录入分录
                         <div class="right">
                             手动录入
-                            <el-switch
-                                v-model="switchValue">
-                            </el-switch>
+                            <el-switch v-model="switchValue"></el-switch>
                         </div>
                     </section>
                     <section class="content-section">
                         <div class="tip-info">
-                            <div>
-                                提示:
-                            </div>
+                            <div>提示:</div>
                             <div>1. 目前支持输入名称和代码两种形式</div>
                             <div>2. 若输入名称，请输入一级科目后在下拉框进行选择</div>
                             <div>3. 若输入代码，请输入完整代码，敲击回车生成科目</div>
                         </div>
+                        <el-table
+                            v-if="currentData"
+                            :data="currentData.columnData"
+                            :header-cell-class-name="getHeaderCellClassName"
+                            :cell-class-name="getCellClassName"
+                            :highlight-current-row="false"
+                            border>
+                            <el-table-column
+                                label="业务日期"
+                                prop="subject">
+                                <template slot="header" class="table-header-cell">
+                                    业务日期
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="money">
+                                <template slot="header" slot-scope="scope">
+                                    <!-- <el-input
+                                    size="mini"
+                                    placeholder="请选择日期"/> -->
+                                    {{currentData.headerData.date}}
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                label="业务描述"
+                                prop="number">
+                            </el-table-column>
+                            <el-table-column
+                                prop="companyName">
+                                <template slot="header" slot-scope="scope">
+                                    <!-- <el-input
+                                    size="mini"
+                                    placeholder="请选择日期"/> -->
+                                    {{currentData.headerData.des}}
+                                </template>
+                            </el-table-column>
+                            <!-- <el-table-column
+                                align="right">
+                                <template slot="header" slot-scope="scope">
+                                    <el-input
+                                    v-model="search"
+                                    size="mini"
+                                    placeholder="输入关键字搜索"/>
+                                </template>
+                                <template slot-scope="scope">
+                                    <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                                    <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                                </template>
+                            </el-table-column> -->
+                        </el-table>
                     </section>
                 </div>
             </section>
@@ -151,14 +201,26 @@
  */
 import 'element-ui/lib/theme-chalk/upload.css';
 import 'element-ui/lib/theme-chalk/switch.css';
+import dataHelper from './dataHelper';
 
 export default {
     data() {
         return {
             switchValue: false,
             accountBillData: {},
-            uploadInfo: {}
+            uploadInfo: {},
+            activedIndex: 0,
+            artificialTableDataList: []
         };
+    },
+    computed: {
+        currentData() {
+            let currentData = null;
+            if (this.artificialTableDataList.length > 0) {
+                currentData = this.artificialTableDataList[this.activedIndex];
+            }
+            return currentData;
+        }
     },
     mounted() {
         const str = localStorage.getItem('currentAccountBill');
@@ -170,9 +232,33 @@ export default {
             compamyName: data.compamyName
         }).then(res => {
             this.uploadInfo = res.data.customerUploadInfo;
+            this.artificialTableDataList = dataHelper.getArtificialTableDataList(res.data.artificialInput);
         });
+    },
+    methods: {
+
+        /**
+         * 获取表头 class name
+         */
+        getHeaderCellClassName(data) {
+            let className = 'table-body-cell';
+            if (data.columnIndex % 2 === 0) {
+                className = 'table-header-cell';
+            }
+            return className;
+        },
+
+        /**
+         * 获取单元格 class name
+         */
+        getCellClassName(data) {
+            let className = '';
+            if (data.row.type === 'header') {
+                className = 'table-header-cell';
+            }
+            return className;
+        }
     }
-    
 }
 </script>
 <style lang="less" scoped>
@@ -227,6 +313,9 @@ export default {
         }
         .upload-item {
             display: inline-block;
+        }
+        .el-table {
+            margin: 10px 0;
         }
     }
 }
