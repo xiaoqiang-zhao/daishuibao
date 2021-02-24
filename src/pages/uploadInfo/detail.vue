@@ -81,6 +81,7 @@
                             drag
                             accept=".xlsx,.xls"
                             action="/api/upload/invoice"
+                            :data="{id: invoiceFileId}"
                             multiple>
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -100,6 +101,7 @@
                             drag
                             accept=".xlsx,.xls"
                             action="/api/upload/bankSlip"
+                            :data="{id: bankSlipFileId}"
                             multiple>
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -289,7 +291,9 @@ export default {
             uploadInfo: {},
             activedIndex: 0,
             artificialTableDataList: [],
-            currentData: null
+            currentData: null,
+            invoiceFileId: utiles.getUUID(1),
+            bankSlipFileId: utiles.getUUID(2)
         };
     },
     mounted() {
