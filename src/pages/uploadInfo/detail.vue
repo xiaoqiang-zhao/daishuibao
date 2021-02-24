@@ -265,8 +265,8 @@
                         <div v-else class="empty-data tip-info">
                             暂无分录信息
                         </div>
-                        <footer v-if="switchValue">
-                            <el-button type="primary">保存</el-button>
+                        <footer>
+                            <el-button type="primary" @click="save">保存</el-button>
                         </footer>
                     </section>
                 </div>
@@ -360,6 +360,19 @@ export default {
             this.artificialTableDataList.push(oneArtificial);
             this.activedIndex++;
             this.currentData = this.artificialTableDataList[this.activedIndex];
+        },
+
+        /**
+         * 保存
+         */
+        save() {
+            this.$http.post('/accountBills/saveInfo', {
+                invoiceFileId: this.invoiceFileId,
+                bankSlipFileId: this.bankSlipFileId,
+                artificialInput: []
+            }).then(res => {
+
+            });
         }
     }
 }
@@ -440,6 +453,10 @@ export default {
         }
         footer {
             text-align: center;
+            padding: 20px;
+            .el-button {
+                min-width: 130px;
+            }
         }
     }
 }
