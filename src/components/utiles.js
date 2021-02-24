@@ -54,7 +54,7 @@ export default {
      * @return {string} 格式化后的字符串
      */
     formateDate(value) {
-        const date = value ? new Date(value * 1000) : new Date();
+        const date = value ? new Date(value) : new Date();
         return moment(date).format('YYYY-MM-DD');
     },
 
@@ -65,7 +65,7 @@ export default {
      * @return {string} 格式化后的字符串
      */
     formateTime(value) {
-        const date = new Date(value * 1000);
+        const date = new Date(value);
         return moment(date).format('YYYYMMDD H:mm:ss');
     },
 

@@ -1,6 +1,25 @@
 /**
  * 信息上传部分的数据处理
  */
+
+// 借方头
+const borrowHeader = {
+    type: 'header',
+    subject: '借方科目',
+    money: '借方金额',
+    number: '发票号',
+    companyName: '交易对手方'
+};
+
+// 贷方头
+const loanHeader = {
+    type: 'header',
+    subject: '贷方科目',
+    money: '贷方金额',
+    number: '回单号',
+    companyName: '汇款对手方'
+};
+
 export default {
 
     /**
@@ -11,22 +30,6 @@ export default {
     getArtificialTableDataList(originalData) {
         const result = [];
         if (originalData && originalData.length > 0) {
-            // 借方头
-            const borrowHeader = {
-                type: 'header',
-                subject: '借方科目',
-                money: '借方金额',
-                number: '发票号',
-                companyName: '交易对手方'
-            };
-            // 贷方头
-            const loanHeader = {
-                type: 'header',
-                subject: '贷方科目',
-                money: '贷方金额',
-                number: '回单号',
-                companyName: '汇款对手方'
-            };
             originalData.forEach(item => {
                 // 借方数据
                 const borrowColumnDataList = [];
@@ -73,5 +76,63 @@ export default {
             });
         }
         return result;
+    },
+
+    /**
+     * 获取一条新 分录 信息
+     */
+    getOneNewArtificialTableData() {
+        return {
+            headerData: {
+                date: '',
+                des: ''
+            },
+            columnData: [
+                borrowHeader,
+                {
+                    type: 'borrow',
+                    subject: '',
+                    money: '',
+                    number: '',
+                    companyName: ''
+                },
+                {
+                    type: 'borrow',
+                    subject: '',
+                    money: '',
+                    number: '',
+                    companyName: ''
+                },
+                {
+                    type: 'borrow',
+                    subject: '',
+                    money: '',
+                    number: '',
+                    companyName: ''
+                },
+                loanHeader,
+                {
+                    type: 'loan',
+                    subject: '',
+                    money: '',
+                    number: '',
+                    companyName: ''
+                },
+                {
+                    type: 'loan',
+                    subject: '',
+                    money: '',
+                    number: '',
+                    companyName: ''
+                },
+                {
+                    type: 'loan',
+                    subject: '',
+                    money: '',
+                    number: '',
+                    companyName: ''
+                }
+            ]
+        };
     }
 }
