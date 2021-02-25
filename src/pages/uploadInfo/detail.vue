@@ -81,7 +81,9 @@
                             drag
                             accept=".xlsx,.xls"
                             action="/api/upload/invoice"
-                            :data="{id: invoiceFileId}"
+                            :file-list="invoiceFileList"
+                            :before-upload="beforeUploadInvoiceFiles"
+                            :before-remove="beforeRemoveInvoiceFiles"
                             multiple>
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -101,7 +103,9 @@
                             drag
                             accept=".xlsx,.xls"
                             action="/api/upload/bankSlip"
-                            :data="{id: bankSlipFileId}"
+                            :file-list="bankSlipFileList"
+                            :before-upload="beforeUploadBankSlipFiles"
+                            :before-remove="beforeRemoveBankSlipFiles"
                             multiple>
                             <i class="el-icon-upload"></i>
                             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -292,8 +296,9 @@ export default {
             activedIndex: 0,
             artificialTableDataList: [],
             currentData: null,
-            invoiceFileId: utiles.getUUID(1),
-            bankSlipFileId: utiles.getUUID(2)
+
+            invoiceFileList: [],
+            bankSlipFileList: []
         };
     },
     mounted() {
@@ -313,6 +318,32 @@ export default {
         });
     },
     methods: {
+
+        beforeUploadInvoiceFiles(file) {
+            this.invoiceFileList.push(file);
+        },
+
+        beforeRemoveInvoiceFiles(file) {
+            this.invoiceFileList.some((item, index) => {
+                if (file.uid === item.uid) {
+                    this.invoiceFileList.splice(index, 1);
+                    return true;
+                }
+            });
+        },
+
+        beforeUploadBankSlipFiles(file) {
+            this.bankSlipFileList.push(file);
+        },
+
+        beforeRemoveBankSlipFiles(file) {
+            this.bankSlipFileList.some((item, index) => {
+                if (file.uid === item.uid) {
+                    this.bankSlipFileList.splice(index, 1);
+                    return true;
+                }
+            });
+        },
 
         /**
          * 获取表头 class name
@@ -366,9 +397,19 @@ export default {
          * 保存
          */
         save() {
+            const invoiceFileIds = [];
+            this.invoiceFileList.forEach(item => {
+                invoiceFileIds.push(item.uid);
+            });
+
+            const bankSlipFileIds = [];
+            this.bankSlipFileList.forEach(item => {
+                bankSlipFileIds.push(item.uid);
+            });
+
             this.$http.post('/accountBills/saveInfo', {
-                invoiceFileId: this.invoiceFileId,
-                bankSlipFileId: this.bankSlipFileId,
+                invoiceFileIds: invoiceFileIds,
+                bankSlipFileIds: bankSlipFileIds,
                 artificialInput: []
             }).then(res => {
 

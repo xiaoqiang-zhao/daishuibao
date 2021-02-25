@@ -60,38 +60,38 @@
                         <el-upload
                             :multiple="false"
                             :limit="1"
-                            :data="{id: balanceStatementFileId}"
                             :with-credentials="true"
-                            :on-success="addBalanceStatementFile"
+                            :before-upload="beforeUploadBalanceStatementFile"
                             :on-remove="removeBalanceStatementFile"
+                            :on-exceed="onExceed"
                             accept=".xlsx,.xls"
                             action="/api/upload/balanceStatement"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【资产负债表】excel</el-button>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="利润表" prop="">
+                    <el-form-item label="利润表" prop="incomeStatementFileId">
                         <el-upload
                             :multiple="false"
                             :limit="1"
-                            :data="{id: balanceStatementFileId}"
                             :with-credentials="true"
-                            :on-success="addIncomeStatementFile"
+                            :before-upload="beforeUploadIncomeStatementFile"
                             :on-remove="removeIncomeStatementFile"
+                            :on-exceed="onExceed"
                             accept=".xlsx,.xls"
                             action="/api/upload/incomeStatement"
                             class="upload-item">
                             <el-button size="small" type="primary">点击上传【利润表】excel</el-button>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="银行流水表" prop="">
+                    <el-form-item label="银行流水表" prop="bankStatementFileId">
                         <el-upload
                             :multiple="false"
                             :limit="1"
-                            :data="{id: balanceStatementFileId}"
                             :with-credentials="true"
-                            :on-success="addBankStatementFile"
+                            :before-upload="beforeUploadBankStatementFile"
                             :on-remove="removeBankStatementFile"
+                            :on-exceed="onExceed"
                             accept=".xlsx,.xls"
                             action="/api/upload/bankStatement"
                             class="upload-item">
@@ -232,9 +232,9 @@ export default {
             industryList: map.industryList,
             payTaxesTypeList: map.payTaxesTypeList,
             // 文件列表
-            balanceStatementFileId: '',
-            incomeStatementFileId: '',
-            bankStatementFileId: '',
+            balanceStatementFileList: [],
+            incomeStatementFileList: [],
+            bankStatementFileList: [],
             companyNameDisable: false,
             form: {
                 companyName: '',
@@ -306,53 +306,73 @@ export default {
                 this.type = 'add';
                 this.title = '新建客户';
                 this.companyNameDisable = false;
-
-                this.balanceStatementFileId = utiles.getUUID(1);
-                this.incomeStatementFileId = utiles.getUUID(2);
-                this.bankStatementFileId = utiles.getUUID(3);
             }
         },
 
         /**
          * 添加
          */
-        addBalanceStatementFile() {
-            this.form.balanceStatementFileId = this.balanceStatementFileId;
+        beforeUploadBalanceStatementFile(file) {
+            this.balanceStatementFileList.push(file);
+            this.form.balanceStatementFileId = file.uid;
         },
 
         /**
          * 移除
          */
-        removeBalanceStatementFile() {
+        removeBalanceStatementFile(file) {
             this.form.balanceStatementFileId = '';
+
+            this.balanceStatementFileList.some((item, index) => {
+                if (file.uid === item.uid) {
+                    this.balanceStatementFileList.splice(index, 1);
+                    return true;
+                }
+            });
         },
 
         /**
          * 添加
          */
-        addIncomeStatementFile() {
-            this.form.incomeStatementFileId = this.incomeStatementFileId;
+        beforeUploadIncomeStatementFile(file) {
+            this.incomeStatementFileList.push(file);
+            this.form.incomeStatementFileId = file.uid;
         },
 
         /**
          * 移除
          */
-        removeIncomeStatementFile() {
+        removeIncomeStatementFile(file) {
             this.form.incomeStatementFileId = '';
+
+            this.incomeStatementFileList.some((item, index) => {
+                if (file.uid === item.uid) {
+                    this.incomeStatementFileList.splice(index, 1);
+                    return true;
+                }
+            });
         },
 
         /**
          * 添加
          */
-        addBankStatementFile() {
-            this.form.bankStatementFileId = this.bankStatementFileId;
+        beforeUploadBankStatementFile(file) {
+            this.bankStatementFileList.push(file);
+            this.form.bankStatementFileId = file.uid;
         },
 
         /**
          * 移除
          */
-        removeBankStatementFile() {
+        removeBankStatementFile(file) {
             this.form.bankStatementFileId = '';
+
+            this.bankStatementFileList.some((item, index) => {
+                if (file.uid === item.uid) {
+                    this.bankStatementFileList.splice(index, 1);
+                    return true;
+                }
+            });
         },
 
         /**
@@ -363,6 +383,13 @@ export default {
                 companyName: '',
                 type: 'new'
             });
+        },
+
+        /**
+         * 超出最大上传数
+         */
+        onExceed() {
+            this.$message.error('当前文件已上传，如需更新请删除后再重新上传');
         },
 
         /**
