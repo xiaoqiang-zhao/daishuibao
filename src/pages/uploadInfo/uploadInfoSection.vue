@@ -65,6 +65,9 @@
 </template>
 
 <script>
+/**
+ * @file 上传模块 / 客户信息纯展示模块
+ */
 export default {
     props: {
         uploadInfo: {
