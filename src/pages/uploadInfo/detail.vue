@@ -1,6 +1,6 @@
 <template>
     <section class="upload-info-detail">
-        <upload-info-section :upload-info="uploadInfo" :account-bill-data="accountBillData"/>
+        <upload-info-section/>
         
         <section class="common-text-block-section">
             <section class="title-section">
@@ -18,155 +18,11 @@
                             <el-switch v-model="switchValue"></el-switch>
                         </div>
                     </section>
-                    <section class="content-section">
-                        <div class="tip-info" v-if="switchValue">
-                            <div>提示:</div>
-                            <div>1. 目前支持输入名称和代码两种形式</div>
-                            <div>2. 若输入名称，请输入一级科目后在下拉框进行选择</div>
-                            <div>3. 若输入代码，请输入完整代码，敲击回车生成科目</div>
-                        </div>
-                        <section v-if="currentData" class="table-section">
-                            <el-table
-                                :data="currentData.columnData"
-                                :header-cell-class-name="getHeaderCellClassName"
-                                :cell-class-name="getCellClassName"
-                                :highlight-current-row="false"
-                                border>
-                                <el-table-column
-                                    label="业务日期"
-                                    prop="subject">
-                                    <template slot="header" class="table-header-cell">
-                                        业务日期
-                                    </template>
-                                    <template slot-scope="scope">
-                                        <template v-if="!switchValue">
-                                            {{ scope.row.subject }}
-                                        </template>
-                                        <template v-else>
-                                            <template v-if="scope.row.type === 'header'">
-                                                {{ scope.row.subject }}
-                                            </template>
-                                            <el-input
-                                                v-else
-                                                v-model="scope.row.subject"
-                                                size="mini"
-                                                placeholder="请填写"/>
-                                        </template>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column prop="money">
-                                    <template slot="header" slot-scope="scope">
-                                        <template v-if="!switchValue">
-                                            {{formateDate(currentData.headerData.date)}}
-                                        </template>
-                                        <el-date-picker
-                                            v-else
-                                            v-model="currentData.headerData.date"
-                                            type="date"
-                                            size="mini"
-                                            placeholder="选择日期">
-                                        </el-date-picker>
-                                    </template>
-                                    <template slot-scope="scope">
-                                        <template v-if="!switchValue">
-                                            {{ scope.row.money }}
-                                        </template>
-                                        <template v-else>
-                                            <template v-if="scope.row.type === 'header'">
-                                                {{ scope.row.money }}
-                                            </template>
-                                            <el-input
-                                                v-else
-                                                v-model="scope.row.money"
-                                                size="mini"
-                                                placeholder="请填写"/>
-                                        </template>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column
-                                    label="业务描述"
-                                    prop="number">
-                                    <template slot-scope="scope">
-                                        <template v-if="!switchValue">
-                                            {{ scope.row.number }}
-                                        </template>
-                                        <template v-else>
-                                            <template v-if="scope.row.type === 'header'">
-                                                {{ scope.row.number }}
-                                            </template>
-                                            <el-input
-                                                v-else
-                                                v-model="scope.row.number"
-                                                size="mini"
-                                                placeholder="请填写"/>
-                                        </template>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column prop="companyName">
-                                    <template slot="header" slot-scope="scope">
-                                        <template v-if="!switchValue">
-                                            {{currentData.headerData.des}}
-                                        </template>
-                                        <el-input
-                                            v-else
-                                            v-model="currentData.headerData.des"
-                                            size="mini"
-                                            placeholder="请填写业务描述"/>
-                                    </template>
-                                    <template slot-scope="scope">
-                                        <template v-if="!switchValue">
-                                            {{ scope.row.number }}
-                                        </template>
-                                        <template v-else>
-                                            <template v-if="scope.row.type === 'header'">
-                                                {{ scope.row.number }}
-                                            </template>
-                                            <el-input
-                                                v-else
-                                                v-model="scope.row.number"
-                                                size="mini"
-                                                placeholder="请填写"/>
-                                        </template>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                            <div class="button-line">
-                                <el-button
-                                    type="primary"
-                                    size="mini"
-                                    :disabled="activedIndex === 0"
-                                    @click="switchActivedIndex(-1)"
-                                    class="previous">
-                                    上一条
-                                </el-button>
-                                <div>
-                                    {{ activedIndex + 1}} / {{ artificialTableDataList.length }}
-                                </div>
-                                <el-button
-                                    v-if="activedIndex === (artificialTableDataList.length - 1) && switchValue"
-                                    type="primary"
-                                    size="mini"
-                                    @click="addOneArtificial"
-                                    class="next">
-                                    新增一条
-                                </el-button>
-                                <el-button
-                                    type="primary"
-                                    size="mini"
-                                    :disabled="activedIndex === (artificialTableDataList.length - 1)"
-                                    @click="switchActivedIndex(1)"
-                                    class="next">
-                                    下一条
-                                </el-button>
-                            </div>
-                        </section>
-                        <div v-else class="empty-data tip-info">
-                            暂无分录信息
-                        </div>
-                        <footer>
-                            <el-button type="primary" @click="save">保存</el-button>
-                        </footer>
-                    </section>
+                    <artificial-table :switch-value="switchValue"/>
+
+                    <footer>
+                        <el-button type="primary" @click="save">保存</el-button>
+                    </footer>
                 </div>
             </section>
         </section>
@@ -178,23 +34,19 @@
  */
 import 'element-ui/lib/theme-chalk/switch.css';
 import dataHelper from './dataHelper';
-import utiles from '@/components/utiles';
 import uploadInfoSection from './uploadInfoSection';
 import uploadFileSection from './uploadFileSection';
+import artificialTable from './artificialTable';
 
 export default {
     components: {
         uploadInfoSection,
-        uploadFileSection
+        uploadFileSection,
+        artificialTable
     },
     data() {
         return {
-            switchValue: false,
-            accountBillData: {},
-            uploadInfo: {},
-            activedIndex: 0,
-            artificialTableDataList: [],
-            currentData: null
+            switchValue: false
         };
     },
     mounted() {
@@ -206,7 +58,6 @@ export default {
         this.$http.get('/accountBills/getInfo', {
             compamyName: data.compamyName
         }).then(res => {
-            this.uploadInfo = res.data.customerUploadInfo;
             this.artificialTableDataList = dataHelper.getArtificialTableDataList(res.data.artificialInput);
             if (this.artificialTableDataList.length > 0) {
                 this.currentData = this.artificialTableDataList[0];
@@ -214,54 +65,6 @@ export default {
         });
     },
     methods: {
-
-        /**
-         * 获取表头 class name
-         */
-        getHeaderCellClassName(data) {
-            let className = 'table-body-cell';
-            if (data.columnIndex % 2 === 0) {
-                className = 'table-header-cell';
-            }
-            return className;
-        },
-
-        /**
-         * 获取单元格 class name
-         */
-        getCellClassName(data) {
-            let className = '';
-            if (data.row.type === 'header') {
-                className = 'table-header-cell';
-            }
-            return className;
-        },
-
-        /**
-         * 格式化日期
-         */
-        formateDate(value) {
-            let result = '';
-            if (value) {
-                result = utiles.formateDate(value);
-            }
-            return result;
-        },
-
-        switchActivedIndex(value) {
-            this.activedIndex += value;
-            this.currentData = this.artificialTableDataList[this.activedIndex];
-        },
-
-        /**
-         * 添加一行
-         */
-        addOneArtificial() {
-            const oneArtificial = dataHelper.getOneNewArtificialTableData();
-            this.artificialTableDataList.push(oneArtificial);
-            this.activedIndex++;
-            this.currentData = this.artificialTableDataList[this.activedIndex];
-        },
 
         /**
          * 保存
@@ -302,17 +105,7 @@ export default {
         .el-table {
             margin: 10px 0;
         }
-        .button-line {
-            display: flex;
-            .previous,
-            .next {
-                flex: 0 0 68px;
-            }
-            > div {
-                flex: 1;
-                text-align: center;
-            }
-        }
+        
         footer {
             text-align: center;
             padding: 20px;

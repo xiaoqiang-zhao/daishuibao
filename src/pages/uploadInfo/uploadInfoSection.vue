@@ -70,23 +70,24 @@
  */
 export default {
     props: {
-        uploadInfo: {
-            type: Object,
-            default() {
-                return {};
-            }
-        },
-        accountBillData: {
-            type: Object,
-            default() {
-                return {};
-            }
-        }
     },
     data() {
         return {
-            // accountBillData: {},
+            accountBillData: {},
+            uploadInfo: {}
         }
+    },
+    mounted() {
+        const str = localStorage.getItem('currentAccountBill');
+        const data = JSON.parse(str);
+        this.accountBillData = data;
+
+        // 获取上传相关信息
+        this.$http.get('/accountBills/getInfo', {
+            compamyName: data.compamyName
+        }).then(res => {
+            this.uploadInfo = res.data.customerUploadInfo;
+        });
     }
 }
 </script>
