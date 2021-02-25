@@ -1,68 +1,6 @@
 <template>
     <section class="upload-info-detail">
-        <section class="info-section">
-            <section class="common-text-block-section">
-                <div class="title-section">
-                    <div class="title">
-                        客户基础信息
-                    </div>
-                </div>
-                <div class="text-section">
-                    <div class="single-line iconfont icon-name">
-                        客户名称: {{ accountBillData.companyName }}
-                    </div>
-                    <div class="item iconfont icon-phone">
-                        客户电话: {{ accountBillData.mobile }}
-                    </div>
-                    <div class="item  iconfont icon-wechart">
-                        客户微信: {{ accountBillData.weChartAccount }}
-                    </div>
-                    <div class="single-line  iconfont icon-man">
-                        会计负责人: {{ accountBillData.accountingManager }}
-                    </div>
-                </div>
-            </section>
-            <section class="common-text-block-section">
-                <div class="title-section">
-                    <div class="title">
-                        客户上传信息
-                    </div>
-                </div>
-                <div class="text-section upload-info-section">
-                    <div class="left">
-                        <div class="single-line iconfont icon-inventory">
-                            库存信息:
-                            <span :class="{uploaded: uploadInfo.inventory}">
-                                {{uploadInfo.inventory ? '已上传' : '未上传' }}
-                            </span>
-                        </div>
-                        <div class="single-line iconfont icon-salary">
-                            工资信息:
-                            <span :class="{uploaded: uploadInfo.salary}">
-                                {{uploadInfo.salary ? '已上传' : '未上传' }}
-                            </span>
-                        </div>
-                        <div class="single-line iconfont icon-bank">
-                            银行流水:
-                            <span class="bank" :class="{uploaded: uploadInfo.bank}">
-                                {{uploadInfo.bank ? '已上传' : '未上传' }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="right tip-info">
-                        <div>
-                            提示:
-                        </div>
-                        <div>
-                            1. 请督促客户及时上传左侧三项信息；
-                        </div>
-                        <div>
-                            2. 银行流水信息为必须项，其余两项可不上传。
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </section>
+        <upload-info-section :upload-info="uploadInfo" :account-bill-data="accountBillData"/>
         
         <section class="common-text-block-section">
             <section class="title-section">
@@ -286,8 +224,12 @@ import 'element-ui/lib/theme-chalk/upload.css';
 import 'element-ui/lib/theme-chalk/switch.css';
 import dataHelper from './dataHelper';
 import utiles from '@/components/utiles';
+import uploadInfoSection from './uploadInfoSection';
 
 export default {
+    components: {
+        uploadInfoSection
+    },
     data() {
         return {
             switchValue: false,
@@ -422,43 +364,13 @@ export default {
 @import '../../assets/var.less';
 .upload-info-detail {
     padding: 0 10px;
-    .info-section {
-        display: flex;
-        .common-text-block-section {
-            flex: 1;
-            .item {
-                width: 49%;
-            }
-        }
-        .common-text-block-section ~ .common-text-block-section {
-            margin-left: 10px;
-        }
-        .iconfont::before {
-            color: @color-grey-low;
-        }
-        .upload-info-section {
-            display: flex;
-            .left,
-            .right {
-                flex: 1;
-            }
-            .left span {
-                font-size: 14px;
-                &.bank {
-                    color: @color-error;
-                }
-                &.uploaded {
-                    color: @color-green;
-                }
-            }
-        }
-    }
-    .company-info {
-        color: @color-grey;
-        span {
-            padding-right: 10px;
-        }
-    }
+    
+    // .company-info {
+    //     color: @color-grey;
+    //     span {
+    //         padding-right: 10px;
+    //     }
+    // }
     .form-section {
         .title-section {
             margin: 0 0 10px 0;
