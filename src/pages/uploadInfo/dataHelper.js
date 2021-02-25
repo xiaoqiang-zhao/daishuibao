@@ -83,6 +83,7 @@ export default {
      */
     getOneNewArtificialTableData() {
         return {
+            isNew: true,
             headerData: {
                 date: '',
                 des: ''

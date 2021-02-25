@@ -20,47 +20,37 @@
                     业务日期
                 </template>
                 <template slot-scope="scope">
-                    <template v-if="!switchValue">
-                        {{ scope.row.subject }}
-                    </template>
+                    <el-input
+                        v-if="currentData.isNew && scope.row.type !== 'header'"
+                        v-model="scope.row.subject"
+                        size="mini"
+                        placeholder="请填写"/>
                     <template v-else>
-                        <template v-if="scope.row.type === 'header'">
-                            {{ scope.row.subject }}
-                        </template>
-                        <el-input
-                            v-else
-                            v-model="scope.row.subject"
-                            size="mini"
-                            placeholder="请填写"/>
+                        {{ scope.row.subject }}
                     </template>
                 </template>
             </el-table-column>
             <el-table-column prop="money">
                 <template slot="header" slot-scope="scope">
-                    <template v-if="!switchValue">
-                        {{formateDate(currentData.headerData.date)}}
-                    </template>
                     <el-date-picker
-                        v-else
+                        v-if="currentData.isNew"
                         v-model="currentData.headerData.date"
                         type="date"
                         size="mini"
                         placeholder="选择日期">
                     </el-date-picker>
+                    <template v-else>
+                        {{formateDate(currentData.headerData.date)}}
+                    </template>
                 </template>
                 <template slot-scope="scope">
-                    <template v-if="!switchValue">
-                        {{ scope.row.money }}
-                    </template>
+                    <el-input
+                        v-if="currentData.isNew && scope.row.type !== 'header'"
+                        v-model="scope.row.money"
+                        size="mini"
+                        placeholder="请填写"/>
                     <template v-else>
-                        <template v-if="scope.row.type === 'header'">
-                            {{ scope.row.money }}
-                        </template>
-                        <el-input
-                            v-else
-                            v-model="scope.row.money"
-                            size="mini"
-                            placeholder="请填写"/>
+                        {{ scope.row.money }}
                     </template>
                 </template>
             </el-table-column>
@@ -68,45 +58,35 @@
                 label="业务描述"
                 prop="number">
                 <template slot-scope="scope">
-                    <template v-if="!switchValue">
-                        {{ scope.row.number }}
-                    </template>
+                    <el-input
+                        v-if="currentData.isNew && scope.row.type !== 'header'"
+                        v-model="scope.row.number"
+                        size="mini"
+                        placeholder="请填写"/>
                     <template v-else>
-                        <template v-if="scope.row.type === 'header'">
-                            {{ scope.row.number }}
-                        </template>
-                        <el-input
-                            v-else
-                            v-model="scope.row.number"
-                            size="mini"
-                            placeholder="请填写"/>
+                        {{ scope.row.number }}
                     </template>
                 </template>
             </el-table-column>
             <el-table-column prop="companyName">
                 <template slot="header" slot-scope="scope">
-                    <template v-if="!switchValue">
-                        {{currentData.headerData.des}}
-                    </template>
                     <el-input
-                        v-else
+                        v-if="currentData.isNew"
                         v-model="currentData.headerData.des"
                         size="mini"
                         placeholder="请填写业务描述"/>
+                    <template v-else>
+                        {{currentData.headerData.des}}
+                    </template>
                 </template>
                 <template slot-scope="scope">
-                    <template v-if="!switchValue">
-                        {{ scope.row.number }}
-                    </template>
+                    <el-input
+                        v-if="currentData.isNew && scope.row.type !== 'header'"
+                        v-model="scope.row.number"
+                        size="mini"
+                        placeholder="请填写"/>
                     <template v-else>
-                        <template v-if="scope.row.type === 'header'">
-                            {{ scope.row.number }}
-                        </template>
-                        <el-input
-                            v-else
-                            v-model="scope.row.number"
-                            size="mini"
-                            placeholder="请填写"/>
+                        {{ scope.row.number }}
                     </template>
                 </template>
             </el-table-column>
