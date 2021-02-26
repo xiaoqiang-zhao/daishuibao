@@ -264,7 +264,7 @@ export default {
         toDetail(data) {
             const str = JSON.stringify(data);
             localStorage.setItem('currentAccountBill', str);
-            this.$router.push('/upload-info/detail');
+            this.$router.push('/upload-info/uploadInfo');
         }
     }
 }

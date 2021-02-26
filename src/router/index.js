@@ -35,8 +35,8 @@ export default new Router({
         },
          // 信息上传 详情页
          {
-            path: '/upload-info/uploadInfo',
-            component: () => import('@/pages/uploadInfo/uploadInfo')
+            path: '/upload-info/uploadInfoPage',
+            component: () => import('@/pages/uploadInfo/uploadInfoPage')
         },
         // 智能做账
         {
