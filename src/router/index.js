@@ -33,10 +33,15 @@ export default new Router({
             path: '/upload-info-list',
             component: () => import('@/pages/uploadInfo/index')
         },
-         // 信息上传 详情页
-         {
+        // 信息上传 上传资料页
+        {
             path: '/upload-info/upload-info-page',
             component: () => import('@/pages/uploadInfo/uploadInfoPage')
+        },
+        // 信息上传 查看资料页
+        {
+            path: '/upload-info/view-info-page',
+            component: () => import('@/pages/uploadInfo/viewInfoPage')
         },
         // 智能做账
         {

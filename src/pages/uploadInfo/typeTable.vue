@@ -99,7 +99,7 @@
                         type="primary"
                         icon="el-icon-upload"
                         size="mini"
-                        @click="toDetail(scope.row)">
+                        @click="toDetail(scope.row, 'upload-info-page')">
                         上传资料
                     </el-button>
                     <el-button
@@ -114,7 +114,8 @@
                     v-if="scope.row.status === 2 || scope.row.status === 3"
                     type="primary"
                     icon="el-icon-view"
-                    size="mini">
+                    size="mini"
+                    @click="toDetail(scope.row, 'view-info-page')">
                     查看资料
                 </el-button>
                 <el-button
@@ -261,10 +262,10 @@ export default {
         /**
          * 到上传详情页
          */
-        toDetail(data) {
+        toDetail(data, path) {
             const str = JSON.stringify(data);
             localStorage.setItem('currentAccountBill', str);
-            this.$router.push('/upload-info/upload-info-page');
+            this.$router.push(`/upload-info/${path}`);
         }
     }
 }
