@@ -84,6 +84,24 @@ export default {
                     return true;
                 }
             });
+        },
+
+        /**
+         * 获取上传文件的id
+         */
+        getUploadFileListIds() {
+            const invoiceFileListIds = [];
+            const bankSlipFileListIds = [];
+            this.invoiceFileList.forEach(item => {
+                invoiceFileListIds.push(item.uid);
+            });
+            this.bankSlipFileList.forEach(item => {
+                bankSlipFileListIds.push(item.uid);
+            });
+            return {
+                invoiceFileListIds,
+                bankSlipFileListIds
+            }
         }
     }
 }

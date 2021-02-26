@@ -135,5 +135,46 @@ export default {
                 }
             ]
         };
+    },
+
+    /**
+     * 将表格数据转换为可提交的后端数据
+     *
+     * @param {Array} tableData 表格数据
+     */
+    transTableData(tableData) {
+        const result = [];
+        tableData.forEach(item => {
+            // 目标格式
+            const dataItem = {
+                date: '',
+                des: '',
+                borrow: [],
+                loan: []
+            }
+            if (item.isNew) {
+                if (item.headerData.date) {
+                    dataItem.date = item.headerData.date.getTime();
+                }
+                dataItem.des = item.headerData.des;
+                item.columnData.forEach(columnItem => {
+                    const data = {
+                        subject: columnItem.subject,
+                        money: columnItem.money,
+                        number: columnItem.number,
+                        companyName: columnItem.companyName
+                    };
+                    if (columnItem.type === 'borrow') {
+                        dataItem.borrow.push(data);
+                    }
+                    else if (columnItem.type === 'loan') {
+                        dataItem.loan.push(data);
+                    }
+                });
+                result.push(dataItem);
+            }
+        });
+
+        return result;
     }
 }

@@ -8,7 +8,7 @@
                 <i class="iconfont icon-document"></i>
                 <span slot="title">客户档案</span>
             </el-menu-item>
-            <el-menu-item index="/upload-info">
+            <el-menu-item index="/upload-info-list">
                 <i class="iconfont icon-upload"></i>
                 <span slot="title">信息上传</span>
             </el-menu-item>

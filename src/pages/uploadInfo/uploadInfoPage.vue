@@ -9,7 +9,7 @@
                 </div>
             </section>
             <section class="form-section">
-                <upload-file-section/>
+                <upload-file-section ref="uploadFileSection"/>
                 <div class="form-item">
                     <section class="title-section">
                         手动录入分录
@@ -18,7 +18,7 @@
                             <el-switch v-model="switchValue"></el-switch>
                         </div>
                     </section>
-                    <artificial-table :switch-value="switchValue"/>
+                    <artificial-table :switch-value="switchValue" ref="artificialTable"/>
 
                     <footer>
                         <el-button type="primary" @click="save">保存</el-button>
@@ -53,16 +53,6 @@ export default {
         const str = localStorage.getItem('currentAccountBill');
         const data = JSON.parse(str);
         this.accountBillData = data;
-
-        // 获取上传相关信息
-        this.$http.get('/accountBills/getInfo', {
-            compamyName: data.compamyName
-        }).then(res => {
-            this.artificialTableDataList = dataHelper.getArtificialTableDataList(res.data.artificialInput);
-            if (this.artificialTableDataList.length > 0) {
-                this.currentData = this.artificialTableDataList[0];
-            }
-        });
     },
     methods: {
 
@@ -70,22 +60,18 @@ export default {
          * 保存
          */
         save() {
-            const invoiceFileIds = [];
-            this.invoiceFileList.forEach(item => {
-                invoiceFileIds.push(item.uid);
-            });
-
-            const bankSlipFileIds = [];
-            this.bankSlipFileList.forEach(item => {
-                bankSlipFileIds.push(item.uid);
-            });
+            const uploadFileListIds = this.$refs.uploadFileSection.getUploadFileListIds();
+            let artificialInput = [];
+            if (this.switchValue) {
+                artificialInput = this.$refs.artificialTable.getData();
+            }
 
             this.$http.post('/accountBills/saveInfo', {
-                invoiceFileIds: invoiceFileIds,
-                bankSlipFileIds: bankSlipFileIds,
-                artificialInput: []
+                invoiceFileIds: uploadFileListIds.invoiceFileListIds,
+                bankSlipFileIds: uploadFileListIds.bankSlipFileListIds,
+                artificialInput
             }).then(res => {
-
+                this.$router.push('/upload-info-list');
             });
         }
     }

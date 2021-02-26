@@ -82,11 +82,11 @@
                 <template slot-scope="scope">
                     <el-input
                         v-if="currentData.isNew && scope.row.type !== 'header'"
-                        v-model="scope.row.number"
+                        v-model="scope.row.companyName"
                         size="mini"
                         placeholder="请填写"/>
                     <template v-else>
-                        {{ scope.row.number }}
+                        {{ scope.row.companyName }}
                     </template>
                 </template>
             </el-table-column>
@@ -149,6 +149,24 @@ export default {
             artificialTableDataList: [],
             currentData: null
         };
+    },
+    watch: {
+        switchValue(value) {
+            if (value === false) {
+                // 去除新加的分录
+                this.artificialTableDataList.some((item, index) => {
+                    if (item.isNew) {
+                        const total = this.artificialTableDataList.length - index;
+                        this.artificialTableDataList.splice(index, total);
+                        return true;
+                    }
+                });
+                if (this.activedIndex > this.artificialTableDataList.length - 1) {
+                    this.activedIndex = this.artificialTableDataList.length - 1;
+                    this.currentData = this.artificialTableDataList[this.activedIndex];
+                }
+            }
+        }
     },
     mounted() {
         const str = localStorage.getItem('currentAccountBill');
@@ -213,6 +231,10 @@ export default {
             this.artificialTableDataList.push(oneArtificial);
             this.activedIndex++;
             this.currentData = this.artificialTableDataList[this.activedIndex];
+        },
+
+        getData() {
+            return dataHelper.transTableData(this.artificialTableDataList);
         }
     }
 };
