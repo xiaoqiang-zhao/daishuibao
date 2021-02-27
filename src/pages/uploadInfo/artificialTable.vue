@@ -13,6 +13,7 @@
             :cell-class-name="getCellClassName"
             :highlight-current-row="false"
             border>
+            <!-- 第一列，贷方科目 借方科目 -->
             <el-table-column
                 label="业务日期"
                 prop="subject">
@@ -20,16 +21,52 @@
                     业务日期
                 </template>
                 <template slot-scope="scope">
-                    <el-input
+                    <!-- <el-input
                         v-if="currentData.isNew && scope.row.type !== 'header'"
                         v-model="scope.row.subject"
                         size="mini"
-                        placeholder="请填写"/>
+                        placeholder="请输入"/> -->
+                    <template v-if="currentData.isNew && scope.row.type !== 'header'">
+                        <el-select
+                            v-if="scope.row.type === 'borrow'"
+                            v-model="scope.row.subject"
+                            filterable
+                            reserve-keyword
+                            placeholder="请输入"
+                            remote
+                            :remote-method="borrowFilterOptions"
+                            size="mini">
+                                <el-option
+                                    v-for="item in options"
+                                    :key="item.code"
+                                    :label="item.text"
+                                    :value="item.code">
+                                </el-option>
+                        </el-select>
+                        <el-select
+                            v-else
+                            v-model="scope.row.subject"
+                            filterable
+                            reserve-keyword
+                            placeholder="请输入"
+                            remote
+                            :remote-method="loanFilterOptions"
+                            size="mini">
+                                <el-option
+                                    v-for="item in options"
+                                    :key="item.code"
+                                    :label="item.text"
+                                    :value="item.code">
+                                </el-option>
+                        </el-select>
+                    </template>
+                    
                     <template v-else>
                         {{ scope.row.subject }}
                     </template>
                 </template>
             </el-table-column>
+            <!-- 第二列 日期选择 借方金额 贷方金额 -->
             <el-table-column prop="money">
                 <template slot="header" slot-scope="scope">
                     <el-date-picker
@@ -48,12 +85,13 @@
                         v-if="currentData.isNew && scope.row.type !== 'header'"
                         v-model="scope.row.money"
                         size="mini"
-                        placeholder="请填写"/>
+                        placeholder="请输入"/>
                     <template v-else>
                         {{ scope.row.money }}
                     </template>
                 </template>
             </el-table-column>
+            <!-- 第三列 发票号 回单号 -->
             <el-table-column
                 label="业务描述"
                 prop="number">
@@ -62,19 +100,20 @@
                         v-if="currentData.isNew && scope.row.type !== 'header'"
                         v-model="scope.row.number"
                         size="mini"
-                        placeholder="请填写"/>
+                        placeholder="请输入"/>
                     <template v-else>
                         {{ scope.row.number }}
                     </template>
                 </template>
             </el-table-column>
+            <!-- 第四列 业务描述 交易对手方 汇款对手方 -->
             <el-table-column prop="companyName">
                 <template slot="header" slot-scope="scope">
                     <el-input
                         v-if="currentData.isNew"
                         v-model="currentData.headerData.des"
                         size="mini"
-                        placeholder="请填写业务描述"/>
+                        placeholder="请输入业务描述"/>
                     <template v-else>
                         {{currentData.headerData.des}}
                     </template>
@@ -84,7 +123,7 @@
                         v-if="currentData.isNew && scope.row.type !== 'header'"
                         v-model="scope.row.companyName"
                         size="mini"
-                        placeholder="请填写"/>
+                        placeholder="请输入"/>
                     <template v-else>
                         {{ scope.row.companyName }}
                     </template>
@@ -135,6 +174,8 @@
  */
 import dataHelper from './dataHelper';
 import utiles from '@/components/utiles';
+import map from '@/components/map';
+
 export default {
     props: {
         switchValue: {
@@ -147,7 +188,8 @@ export default {
             accountBillData: {},
             activedIndex: 0,
             artificialTableDataList: [],
-            currentData: null
+            currentData: null,
+            options: []
         };
     },
     watch: {
@@ -233,6 +275,35 @@ export default {
             this.currentData = this.artificialTableDataList[this.activedIndex];
         },
 
+        /**
+         * 借方科目过滤
+         */
+        borrowFilterOptions(value) {
+            this.filterOptions('borrow', value);
+        },
+
+        /**
+         * 贷方科目过滤
+         */
+        loanFilterOptions(value) {
+            this.filterOptions('loan', value);
+        },
+
+        /**
+         * 科目过滤
+         */
+        filterOptions(type, value) {
+            this.options = [];
+            map[type].forEach(item => {
+                if (item.text.indexOf(value) > -1 || item.code.indexOf(value) > -1) {
+                    this.options.push(item);
+                }
+            });
+        },
+
+        /**
+         * 获取新添加的分录数据
+         */
         getData() {
             return dataHelper.transTableData(this.artificialTableDataList);
         }
