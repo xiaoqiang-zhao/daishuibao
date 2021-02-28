@@ -223,7 +223,7 @@ export default {
          * @param {String} companyName 公司名称
          */
         postDelete(companyName) {
-            this.$http.post('/company/delete', {
+            this.$http.post('/companies/delete', {
                 companyName: companyName
             }).then(res => {
                 if (res.data.isSuccess) {

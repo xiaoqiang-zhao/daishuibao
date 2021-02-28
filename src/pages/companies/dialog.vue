@@ -437,8 +437,9 @@ export default {
                     customers.push(item.companyName);
                 }
             });
-
-            this.$http.post(`/company/${this.type}`, {
+            const currentUser = utiles.getCurrentUser();
+            this.$http.post(`/companies/${this.type}`, {
+                bCompanyName: currentUser.bCompanyName,
                 ...this.form,
                 suppliers,
                 customers
