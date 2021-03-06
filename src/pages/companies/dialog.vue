@@ -58,12 +58,15 @@
                 <template v-if="type === 'add'">
                     <el-form-item label="资产负债表" prop="balanceStatementFileId">
                         <el-upload
+                            ref="balanceStatementUploadComponent"
                             :multiple="false"
                             :limit="1"
                             :with-credentials="true"
-                            :before-upload="beforeUploadBalanceStatementFile"
+                            :on-change="beforeUploadBalanceStatementFile"
                             :on-remove="removeBalanceStatementFile"
                             :on-exceed="onExceed"
+                            :auto-upload="false"
+                            :data="{uid: form.balanceStatementFileId}"
                             accept=".xlsx,.xls"
                             action="/api/upload/balanceStatement"
                             class="upload-item">
@@ -72,12 +75,15 @@
                     </el-form-item>
                     <el-form-item label="利润表" prop="incomeStatementFileId">
                         <el-upload
+                            ref="incomeStatementUploadComponent"
                             :multiple="false"
                             :limit="1"
                             :with-credentials="true"
-                            :before-upload="beforeUploadIncomeStatementFile"
+                            :on-change="beforeUploadIncomeStatementFile"
                             :on-remove="removeIncomeStatementFile"
                             :on-exceed="onExceed"
+                            :auto-upload="false"
+                            :data="{uid: form.incomeStatementFileId}"
                             accept=".xlsx,.xls"
                             action="/api/upload/incomeStatement"
                             class="upload-item">
@@ -86,12 +92,15 @@
                     </el-form-item>
                     <el-form-item label="银行流水表" prop="bankStatementFileId">
                         <el-upload
+                            ref="bankStatementUploadComponent"
                             :multiple="false"
                             :limit="1"
                             :with-credentials="true"
-                            :before-upload="beforeUploadBankStatementFile"
+                            :on-change="beforeUploadBankStatementFile"
                             :on-remove="removeBankStatementFile"
                             :on-exceed="onExceed"
+                            :auto-upload="false"
+                            :data="{uid: form.bankStatementFileId}"
                             accept=".xlsx,.xls"
                             action="/api/upload/bankStatement"
                             class="upload-item">
@@ -265,7 +274,9 @@ export default {
                 bankStatementFileId: requiredFileRule
             },
             suppliersTableData: [],
-            customersTableData: []
+            customersTableData: [],
+            // 上传文件成功计数
+            uploadCount: 0
         };
     },
     methods: {
@@ -310,11 +321,18 @@ export default {
         },
 
         /**
-         * 添加
+         * 添加资产负债表
          */
         beforeUploadBalanceStatementFile(file) {
-            this.balanceStatementFileList.push(file);
-            this.form.balanceStatementFileId = file.uid;
+            debugger
+            if (file.status === 'ready') {
+                this.balanceStatementFileList.push(file);
+                this.form.balanceStatementFileId = file.uid;
+            }
+            else if (file.status === 'success') {
+                this.uploadCount++;
+                this.postData();
+            }
         },
 
         /**
@@ -335,8 +353,14 @@ export default {
          * 添加
          */
         beforeUploadIncomeStatementFile(file) {
-            this.incomeStatementFileList.push(file);
-            this.form.incomeStatementFileId = file.uid;
+            if (file.status === 'ready') {
+                this.incomeStatementFileList.push(file);
+                this.form.incomeStatementFileId = file.uid;
+            }
+            else if (file.status === 'success') {
+                this.uploadCount++;
+                this.postData();
+            }
         },
 
         /**
@@ -357,8 +381,14 @@ export default {
          * 添加
          */
         beforeUploadBankStatementFile(file) {
-            this.bankStatementFileList.push(file);
-            this.form.bankStatementFileId = file.uid;
+            if (file.status === 'ready') {
+                this.bankStatementFileList.push(file);
+                this.form.bankStatementFileId = file.uid;
+            }
+            else if (file.status === 'success') {
+                this.uploadCount++;
+                this.postData();
+            }
         },
 
         /**
@@ -413,7 +443,11 @@ export default {
             this.$refs.form.validate(result => {
                 // 校验成功
                 if (result) {
-                    this.postData();
+                    this.uploadCount = 0;
+                    // 上传文件
+                    this.$refs.balanceStatementUploadComponent.submit();
+                    this.$refs.incomeStatementUploadComponent.submit();
+                    this.$refs.bankStatementUploadComponent.submit();
                 }
             });
         },
@@ -422,20 +456,23 @@ export default {
          * 提交数据
          */
         postData() {
+            if (this.uploadCount < 3) {
+                return;
+            }
             // 添加公司
             const suppliers = [];
             const customers = [];
 
             this.suppliersTableData.forEach(item => {
-                if (item.type === 'new') {
-                    suppliers.push(item.companyName);
-                }
+                suppliers.push(item.companyName);
+                // if (item.type === 'new') {
+                // }
             });
 
             this.customersTableData.forEach(item => {
-                if (item.type === 'new') {
-                    customers.push(item.companyName);
-                }
+                customers.push(item.companyName);
+                // if (item.type === 'new') {
+                // }
             });
             const currentUser = utiles.getCurrentUser();
             this.$http.post(`/companies/${this.type}`, {
