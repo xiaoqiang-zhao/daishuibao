@@ -22,7 +22,7 @@ module.exports = {
         //         }
         //     }
         // },
-        host: '121.89.205.96',
+        host: 'http://121.89.205.96',
         port: 8898,
         errorOverlay: true,
         notifyOnErrors: true,
