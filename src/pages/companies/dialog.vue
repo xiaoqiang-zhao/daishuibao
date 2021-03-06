@@ -324,7 +324,6 @@ export default {
          * 添加资产负债表
          */
         beforeUploadBalanceStatementFile(file) {
-            debugger
             if (file.status === 'ready') {
                 this.balanceStatementFileList.push(file);
                 this.form.balanceStatementFileId = file.uid;

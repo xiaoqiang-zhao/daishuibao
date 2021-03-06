@@ -6,12 +6,15 @@
             </section>
             <el-upload
                 class="upload-demo"
+                ref="invoiceUploadComponent"
                 drag
                 accept=".xlsx,.xls"
                 action="/api/upload/invoice"
                 :file-list="invoiceFileList"
-                :before-upload="beforeUploadInvoiceFiles"
+                :on-change="beforeUploadInvoiceFiles"
                 :before-remove="beforeRemoveInvoiceFiles"
+                :auto-upload="false"
+                :data="{uid: invoiceFileListId}"
                 multiple>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -28,12 +31,15 @@
             </section>
             <el-upload
                 class="upload-demo"
+                ref="bankSlipUploadComponent"
                 drag
                 accept=".xlsx,.xls"
                 action="/api/upload/bankSlip"
                 :file-list="bankSlipFileList"
-                :before-upload="beforeUploadBankSlipFiles"
+                :on-change="beforeUploadBankSlipFiles"
                 :before-remove="beforeRemoveBankSlipFiles"
+                :auto-upload="false"
+                :data="{uid: bankSlipFileListId}"
                 multiple>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -50,18 +56,29 @@
  * @file 上传资料页 / 上传发票部分
  */
 import 'element-ui/lib/theme-chalk/upload.css';
+import utiles from '@/components/utiles';
 
 export default {
     data() {
         return {
             invoiceFileList: [],
-            bankSlipFileList: []
-        }
+            bankSlipFileList: [],
+            invoiceFileListId: utiles.getUUID(),
+            bankSlipFileListId: utiles.getUUID(),
+            cb: new Function(),
+            count: 0
+        };
     },
     methods: {
 
         beforeUploadInvoiceFiles(file) {
-            this.invoiceFileList.push(file);
+            if (file.status === 'ready') {
+                this.invoiceFileList.push(file);
+            }
+            else if (file.status === 'success') {
+                this.count--;
+                this.executeCallback();
+            }
         },
 
         beforeRemoveInvoiceFiles(file) {
@@ -74,7 +91,13 @@ export default {
         },
 
         beforeUploadBankSlipFiles(file) {
-            this.bankSlipFileList.push(file);
+            if (file.status === 'ready') {
+                this.bankSlipFileList.push(file);
+            }
+            else if (file.status === 'success') {
+                this.count--;
+                this.executeCallback();
+            }
         },
 
         beforeRemoveBankSlipFiles(file) {
@@ -90,17 +113,37 @@ export default {
          * 获取上传文件的id
          */
         getUploadFileListIds() {
-            const invoiceFileListIds = [];
-            const bankSlipFileListIds = [];
-            this.invoiceFileList.forEach(item => {
-                invoiceFileListIds.push(item.uid);
-            });
-            this.bankSlipFileList.forEach(item => {
-                bankSlipFileListIds.push(item.uid);
-            });
-            return {
-                invoiceFileListIds,
-                bankSlipFileListIds
+            const data = {
+                invoiceFileListId: this.invoiceFileList.length ? this.invoiceFileListId : '',
+                bankSlipFileListId: this.bankSlipFileList.length ? this.bankSlipFileListId : '',
+            };
+            return data;
+        },
+
+        /**
+         * 手动触发上传
+         */
+        upload(cb) {
+            this.cb = cb;
+            const data = this.getUploadFileListIds();
+            this.count = 0;
+            debugger
+            if (data.invoiceFileListId) {
+                this.count++;
+                this.$refs.invoiceUploadComponent.submit();
+            }
+            if (data.bankSlipFileListId) {
+                this.count++;
+                this.$refs.bankSlipUploadComponent.submit();
+            }
+        },
+        
+        /**
+         * 执行回调
+         */
+        executeCallback() {
+            if (this.count === 0) {
+                this.cb();
             }
         }
     }

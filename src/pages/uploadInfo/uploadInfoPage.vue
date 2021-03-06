@@ -66,12 +66,14 @@ export default {
                 artificialInput = this.$refs.artificialTable.getData();
             }
 
-            this.$http.post('/accountBills/saveInfo', {
-                invoiceFileIds: uploadFileListIds.invoiceFileListIds,
-                bankSlipFileIds: uploadFileListIds.bankSlipFileListIds,
-                artificialInput
-            }).then(res => {
-                this.$router.push('/upload-info-list');
+            this.$refs.uploadFileSection.upload(() => {
+                this.$http.post('/accountBills/saveInfo', {
+                    invoiceFileId: uploadFileListIds.invoiceFileListId,
+                    bankSlipFileId: uploadFileListIds.bankSlipFileListId,
+                    artificialInput
+                }).then(res => {
+                    this.$router.push('/upload-info-list');
+                });
             });
         }
     }
