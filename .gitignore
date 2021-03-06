@@ -79,6 +79,3 @@ Thumbs.db
 /aiib-web-components
 
 # 只做本地修改的，暂不提交
-/build/webpack.base.conf.js
-/config/index.js
-/mock/t.json
