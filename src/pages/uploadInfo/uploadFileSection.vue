@@ -70,6 +70,25 @@ export default {
         };
     },
     methods: {
+        // uploadFile: function (fileData) {
+        //     const formData = new FormData();
+        //     // 键值
+        //     formData.append('file', fileData.file);
+        //     formData.append('uid', fileData.file.uid);
+
+        //     this.$http.post(
+        //         fileData.action,
+        //         formData,
+        //         {
+        //             headers: {
+        //                 'Content-Type': 'multipart/form-data'
+        //             }
+        //         }
+        //     ).then(res => {
+        //     }).catch(err => {
+        //         console.error(err);
+        //     });
+        // },
 
         beforeUploadInvoiceFiles(file) {
             if (file.status === 'ready') {
@@ -127,7 +146,6 @@ export default {
             this.cb = cb;
             const data = this.getUploadFileListIds();
             this.count = 0;
-            debugger
             if (data.invoiceFileListId) {
                 this.count++;
                 this.$refs.invoiceUploadComponent.submit();
