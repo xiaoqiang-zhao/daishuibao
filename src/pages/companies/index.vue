@@ -187,9 +187,7 @@ export default {
                 pageNumber
             };
 
-            this.$http.get('/companies', {
-                params: queryData
-            }).then(res => {
+            this.$http.post('/companies/get', queryData).then(res => {
                 this.total = res.data.total;
                 this.tableData = res.data.list;
             });

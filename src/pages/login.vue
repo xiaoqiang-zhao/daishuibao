@@ -76,7 +76,7 @@ export default {
             // 校验
             this.$refs.form.validate(result => {
                 if (result) {
-                    this.$http.post('/login', this.form).then(res => {
+                    this.$http.post('/account/login', this.form).then(res => {
                         // 登录成功
                         if (res.data.isSuccess) {
                             utiles.setCurrentUser(res.data);

@@ -17,8 +17,14 @@ Vue.prototype.$http = axios;
 Vue.use(elementUI);
 let errorMark = false;
 
-axios.interceptors.request.use(function(config) {
+axios.interceptors.request.use((config) => {
     config.url = '/api' + config.url;
+    const currentUser = utiles.getCurrentUser();
+    if (currentUser) {
+        config.data = config.data || {};
+        config.data.bName = currentUser.bCompanyName;
+    }
+
     return config;
 });
 
