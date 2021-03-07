@@ -73,7 +73,6 @@ Thumbs.db
 # build assets
 /output
 /dist
-/dll
 
 # 依赖自己的库
 /aiib-web-components
