@@ -13,15 +13,15 @@ module.exports = {
     dev: {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
-        proxyTable: {
-            '/api': {
-                // 联调环境
-                target: 'http://172.17.22.58:8090',
-                filter: (pathname, req) => {
-                    return req.headers['x-requested-with'];
-                }
-            }
-        },
+        // proxyTable: {
+        //     '/api': {
+        //         // 联调环境
+        //         target: 'http://172.17.22.58:8090',
+        //         filter: (pathname, req) => {
+        //             return req.headers['x-requested-with'];
+        //         }
+        //     }
+        // },
         host: '127.0.0.1',
         port: 8898,
         errorOverlay: true,

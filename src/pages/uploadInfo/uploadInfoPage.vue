@@ -32,8 +32,9 @@
 /**
  * @file 上传资料页
  */
+
 import 'element-ui/lib/theme-chalk/switch.css';
-import dataHelper from './dataHelper';
+// import utiles from '@/components/utiles';
 import uploadInfoSection from './uploadInfoSection';
 import uploadFileSection from './uploadFileSection';
 import artificialTable from './artificialTable';
@@ -68,6 +69,7 @@ export default {
 
             this.$refs.uploadFileSection.upload(() => {
                 this.$http.post('/accountBills/saveInfo', {
+                    cName: this.accountBillData.companyName,
                     invoiceFileId: uploadFileListIds.invoiceFileListId,
                     bankSlipFileId: uploadFileListIds.bankSlipFileListId,
                     artificialInput

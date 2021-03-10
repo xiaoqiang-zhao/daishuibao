@@ -154,6 +154,10 @@ export default {
                 this.count++;
                 this.$refs.bankSlipUploadComponent.submit();
             }
+
+            if (this.count === 0) {
+                cb();
+            }
         },
         
         /**
