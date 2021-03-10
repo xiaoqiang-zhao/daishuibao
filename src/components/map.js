@@ -12,6 +12,10 @@ export default {
     },
     // 报账状态
     accountStatusList: [
+        // {
+        //     label: '全部',
+        //     value: 0
+        // },
         {
             label: '待上传资料',
             value: 1

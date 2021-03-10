@@ -187,7 +187,7 @@ export default {
             // 获取搜索条件
             const queryData = {
                 companyName: this.companyName,
-                status: this.status,
+                status: this.status || 0,
                 pageSize: this.pageSize,
                 pageNumber
             };

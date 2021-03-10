@@ -462,11 +462,17 @@ export default {
             this.$refs.form.validate(result => {
                 // 校验成功
                 if (result) {
-                    this.uploadCount = 0;
-                    // 上传文件
-                    this.$refs.balanceStatementUploadComponent.submit();
-                    this.$refs.incomeStatementUploadComponent.submit();
-                    this.$refs.bankStatementUploadComponent.submit();
+                    if (this.type === 'add') {
+                        this.uploadCount = 0;
+                        // 上传文件
+                        this.$refs.balanceStatementUploadComponent.submit();
+                        this.$refs.incomeStatementUploadComponent.submit();
+                        this.$refs.bankStatementUploadComponent.submit();
+                    }
+                    else {
+                        this.uploadCount = 3;
+                        this.postData();
+                    }
                 }
             });
         },
@@ -484,14 +490,10 @@ export default {
 
             this.suppliersTableData.forEach(item => {
                 suppliers.push(item.companyName);
-                // if (item.type === 'new') {
-                // }
             });
 
             this.customersTableData.forEach(item => {
                 customers.push(item.companyName);
-                // if (item.type === 'new') {
-                // }
             });
             const currentUser = utiles.getCurrentUser();
             this.$http.post(`/companies/${this.type}`, {
