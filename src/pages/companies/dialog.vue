@@ -320,6 +320,26 @@ export default {
             }
         },
 
+        uploadFile: function (fileData) {
+            const formData = new FormData();
+            // 键值
+            formData.append('file', fileData.file);
+            formData.append('uid', fileData.file.uid);
+
+            this.$http.post(
+                fileData.action,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(res => {
+            }).catch(err => {
+                console.error(err);
+            });
+        },
+
         /**
          * 添加资产负债表
          */
