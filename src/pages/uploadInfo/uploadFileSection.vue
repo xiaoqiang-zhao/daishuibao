@@ -8,7 +8,7 @@
                 class="upload-demo"
                 ref="invoiceUploadComponent"
                 drag
-                accept=".xlsx,.xls"
+                accept=".jpg,.png"
                 action="/api/upload/invoice"
                 :file-list="invoiceFileList"
                 :on-change="beforeUploadInvoiceFiles"
@@ -33,7 +33,7 @@
                 class="upload-demo"
                 ref="bankSlipUploadComponent"
                 drag
-                accept=".xlsx,.xls"
+                accept=".jpg,.png"
                 action="/api/upload/bankSlip"
                 :file-list="bankSlipFileList"
                 :on-change="beforeUploadBankSlipFiles"
