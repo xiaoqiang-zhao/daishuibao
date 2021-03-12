@@ -47,9 +47,7 @@
                 </div>
             </header>
             <el-table
-                stripe
                 :data="tableData"
-                tooltip-effect="dark"
                 style="width: 100%">
                 <el-table-column
                     prop="serialNumber"
@@ -60,7 +58,7 @@
                     prop="companyName"
                     label="公司名">
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                     prop="industry"
                     label="所属行业"
                     width="90">
@@ -115,7 +113,7 @@
                             删除
                         </el-button>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
             </el-table>
             <el-pagination
                 background
