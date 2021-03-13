@@ -46,7 +46,7 @@ export default {
         };
     },
     mounted() {
-        // this.loadData();
+        this.loadData();
     },
     methods: {
 
@@ -54,7 +54,7 @@ export default {
          * 加载数据
          */
         loadData() {
-            this.$http.get('/process-statistics').then(res => {
+            this.$http.post('/processStatistics').then(res => {
                 this.total = res.data.total;
                 // 加工数据
                 const pageStatusMap = [
